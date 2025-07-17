@@ -26,7 +26,12 @@ export function useTrips() {
       )
     );
   };
+  const removePlannedTrip = (tripId) => {
+    const updatedTrips = trips.filter((trip) => trip.id !== tripId);
+    setTrips(updatedTrips);
+  };
+  
   
 
-  return { trips, addTrip, removeTrip,updateTrip };
+  return { trips, addTrip, removeTrip, updateTrip,removePlannedTrip };
 }

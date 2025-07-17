@@ -10,14 +10,12 @@ import {
   Image,
   useToast,
 } from '@chakra-ui/react';
-import { useTrips } from '../hooks/useTrips';
 import { Link } from 'react-router-dom';
 import { EditTripModal } from '../components/EditTripModal';
-
+import { useTrips } from '../hooks/useTrips';
 
 export default function MyTrips() {
-
-  const { trips, removeTrip, updateTrip } = useTrips();
+  const { trips, updateTrip, removePlannedTrip } = useTrips();
   const toast = useToast();
   const saved = trips.filter((t) => !t.startDate);
   const planned = trips.filter((t) => t.startDate);
@@ -67,22 +65,8 @@ export default function MyTrips() {
                   <Button as={Link} to={`/destination/${trip.id}`} size="sm" colorScheme="blue">
                     View Details
                   </Button>
-                  <Button
-                    size="sm"
-                    colorScheme="red"
-                    onClick={() => {
-                      removeTrip(trip.id);
-                      toast({
-                        title: 'Trip removed',
-                        description: `${trip.name} was removed from your trips.`,
-                        status: 'warning',
-                        duration: 3000,
-                        isClosable: true,
-                        position: 'top',
-                      });
-                    }}
-                  >
-                    Remove
+                  <Button colorScheme="red" size="sm" onClick={() => removePlannedTrip(trip.id)}>
+                    Delete
                   </Button>
                 </Stack>
               </Box>
@@ -133,6 +117,24 @@ export default function MyTrips() {
                   <Button size="sm" colorScheme="purple">
                     View Itinerary
                   </Button>
+                  <Button
+                        colorScheme="red"
+                        size="sm"
+                        onClick={() => {
+                          removePlannedTrip(trip.id);
+                          toast({
+                            title: "Trip removed",
+                            description: `"${trip.name}" was removed from your planned trips.`,
+                            status: "info",
+                            duration: 3000,
+                            isClosable: true,
+                            position:"top",
+                          });
+                        }}
+                      >
+                        Remove
+                      </Button>
+                      
                   <EditTripModal
                       trip={trip}
                       onSave={(updatedTrip) => {

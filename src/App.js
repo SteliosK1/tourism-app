@@ -41,16 +41,16 @@ function App() {
 
           {/* Navigation Links */}
           <HStack spacing={4}>
-  <NavLink to="/" style={navStyle}>
-    Home
-  </NavLink>
-  <NavLink to="/destinations" style={navStyle}>
-    Destinations
-  </NavLink>
-  <NavLink to="/my-trips" style={navStyle}>
-    My Trips
-  </NavLink>
-</HStack>
+            <NavLink to="/" style={navStyle}>
+              Home
+            </NavLink>
+            <NavLink to="/destinations" style={navStyle}>
+              Destinations
+            </NavLink>
+            <NavLink to="/my-trips" style={navStyle}>
+              My Trips
+            </NavLink>
+          </HStack>
         </Flex>
 
         {/* Routes */}
