@@ -107,33 +107,19 @@ export default function MyTrips() {
               <Box flex="1">
                 <Heading size="md">{trip.name}</Heading>
                 <Text fontSize="sm" color="gray.500">
-                  Dates: {trip.startDate} – {trip.endDate}
+                  Dates: {new Date(trip.startDate).toLocaleDateString()} – {new Date(trip.endDate).toLocaleDateString()}
                 </Text>
                 <Text>Destination: {trip.name}</Text>
                 <Badge colorScheme={trip.status === 'Confirmed' ? 'green' : 'yellow'}>
                   Status: {trip.status}
                 </Badge>
                 <Stack direction="row" mt={3}>
-                  <Button size="sm" colorScheme="purple">
-                    View Itinerary
+                <Button as={Link} to={`/destination/${trip.id}`} size="sm" colorScheme="blue">
+                    View Details
                   </Button>
-                  <Button
-                        colorScheme="red"
-                        size="sm"
-                        onClick={() => {
-                          removePlannedTrip(trip.id);
-                          toast({
-                            title: "Trip removed",
-                            description: `"${trip.name}" was removed from your planned trips.`,
-                            status: "info",
-                            duration: 3000,
-                            isClosable: true,
-                            position:"top",
-                          });
-                        }}
-                      >
-                        Remove
-                      </Button>
+                  <Button colorScheme="red" size="sm" onClick={() => removePlannedTrip(trip.id)}>
+                    Delete
+                  </Button>
                       
                   <EditTripModal
                       trip={trip}

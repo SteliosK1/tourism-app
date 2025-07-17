@@ -11,7 +11,7 @@ const destinations = [
       "Champs-Élysées",
       "Montmartre"
     ],
-    rating: 4.9,
+    rating: 4.8,
     cuisine: "Experience authentic French cuisine including croissants, macarons, escargot, and world-class wines. Visit local bistros and patisseries for an authentic taste of Paris.",
     tripInfo: {
       bestTime: "April to October",
