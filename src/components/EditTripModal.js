@@ -12,6 +12,8 @@ import {
     Input,
     Select,
     useDisclosure,
+    Alert, 
+    AlertIcon
   } from '@chakra-ui/react';
   import { useState } from 'react';
   
@@ -20,8 +22,14 @@ import {
     const [startDate, setStartDate] = useState(trip.startDate || '');
     const [endDate, setEndDate] = useState(trip.endDate || '');
     const [status, setStatus] = useState(trip.status || 'Planning');
-  
+    const [showError, setShowError] = useState(false);
+
     const handleSave = () => {
+      if (startDate && endDate && startDate > endDate) {
+        setShowError(true);
+        return; 
+      }
+      
       onSave({
         ...trip,
         startDate,
@@ -67,6 +75,13 @@ import {
                 </Select>
               </FormControl>
             </ModalBody>
+            {showError && (
+  <Alert status="error" mt={4}>
+    <AlertIcon />
+    Start date cannot be after end date.
+  </Alert>
+)}
+
   
             <ModalFooter>
               <Button onClick={onClose} mr={3}>

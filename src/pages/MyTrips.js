@@ -55,6 +55,12 @@ export default function MyTrips() {
                   objectFit="cover"
                 />
               </Box>
+              {trip.title && (
+  <Text fontStyle="italic" fontSize="sm" mt={1}>
+    {trip.title}
+  </Text>
+)}
+
               <Box flex="1">
                 <Heading size="md">{trip.name}</Heading>
                 <Text fontSize="sm" color="gray.500">
