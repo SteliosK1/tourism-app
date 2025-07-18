@@ -62,7 +62,30 @@ const destinations = [
         cost: "$150–250/day"
       },rating: 4.6,
       image: "https://t3.ftcdn.net/jpg/02/09/70/56/360_F_209705645_b78HGJI1i1mxqLwMYA7z1m3VvCxgxJFO.jpg"
+    },
+    {
+      id: 4,
+      name: "Rome, Italy",
+      tagline: "The Eternal City",
+      description: "Rome is a historic city filled with ancient ruins, Renaissance art, and vibrant street life. It's a journey through time with every step you take.",
+      attractions: [
+        "Colosseum",
+        "Trevi Fountain",
+        "Pantheon",
+        "Vatican Museums",
+        "Roman Forum"
+      ],
+      cuisine: "Indulge in traditional Italian dishes like pasta carbonara, pizza margherita, gelato, and espresso.",
+      tripInfo: {
+        bestTime: "April to June & September to October",
+        currency: "Euro (€)",
+        language: "Italian",
+        cost: "$120–200/day"
+      },
+      rating: 4.3,
+      image: "https://media.timeout.com/images/105212586/750/562/image.jpg"
     }
+    
   ];
   
   export default destinations;

@@ -67,7 +67,8 @@ function Home() {
         <Box height="2px" bg="teal.500" mb={6} />
 
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
-          {filtered.map(dest => (
+          {filtered.filter((destination) => destination.rating > 4.5)
+          .map(dest => (
             <Box
               key={dest.id}
               borderWidth="1px"
