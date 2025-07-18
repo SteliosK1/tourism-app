@@ -47,7 +47,7 @@ import {
   
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
           <ModalOverlay />
-          <ModalContent>
+          <ModalContent maxW={{ base: "90%", sm: "400px", md: "500px" }} mx="auto" borderRadius="lg">
             <ModalHeader>Edit Trip to {trip.name}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>

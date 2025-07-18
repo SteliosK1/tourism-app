@@ -13,14 +13,14 @@ import {
     Select,
     useDisclosure,
     InputGroup,
-    InputLeftElement 
+    InputLeftElement,
+    useToast
   } from '@chakra-ui/react';
   import { useState } from 'react';
   import DatePicker from 'react-datepicker';
   import 'react-datepicker/dist/react-datepicker.css';
   import { CalendarIcon } from '@chakra-ui/icons';
   import React, { forwardRef } from 'react';
-  import { useToast } from "@chakra-ui/react";
 
   export function AddTripModal({ destination, onAdd }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -32,8 +32,8 @@ import {
     const handleSubmit = () => {
       if (startDate && endDate && startDate.getTime() > endDate.getTime()) {
         toast({
-          title: 'Ημερομηνίες μη έγκυρες',
-          description: 'Η ημερομηνία έναρξης δεν μπορεί να είναι μετά την ημερομηνία λήξης.',
+          title: 'Start date cannot be later than end date.',
+          description: "The start date cannot be later than the end date.",
           status: 'error',
           duration: 4000,
           isClosable: true,

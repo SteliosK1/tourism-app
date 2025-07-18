@@ -15,10 +15,6 @@ export function useTrips() {
       setTrips([...trips, { ...destination, addedAt: new Date().toISOString() }]);
     }
   };
-
-  const removeTrip = (id) => {
-    setTrips(trips.filter((t) => t.id !== id));
-  };
   const updateTrip = (updatedTrip) => {
     setTrips((prev) =>
       prev.map((trip) =>
@@ -26,12 +22,12 @@ export function useTrips() {
       )
     );
   };
-  const removePlannedTrip = (tripId) => {
+  const removeTrip = (tripId) => {
     const updatedTrips = trips.filter((trip) => trip.id !== tripId);
     setTrips(updatedTrips);
   };
   
   
 
-  return { trips, addTrip, removeTrip, updateTrip,removePlannedTrip };
+  return { trips, addTrip , updateTrip, removeTrip };
 }

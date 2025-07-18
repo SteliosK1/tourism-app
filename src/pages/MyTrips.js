@@ -15,10 +15,20 @@ import { EditTripModal } from '../components/EditTripModal';
 import { useTrips } from '../hooks/useTrips';
 
 export default function MyTrips() {
-  const { trips, updateTrip, removePlannedTrip } = useTrips();
+  const { trips, updateTrip, removeTrip } = useTrips();
   const toast = useToast();
   const saved = trips.filter((t) => !t.startDate);
-  const planned = trips.filter((t) => t.startDate);
+  const planned = trips.filter((t) => t.startDate);  
+  const handleDelete = (id) => {
+    removeTrip(id); 
+    toast({
+      title: 'Your trip has been deleted.',
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+      position: 'top',
+    });
+  };
   
 
   return (
@@ -55,13 +65,12 @@ export default function MyTrips() {
                   objectFit="cover"
                 />
               </Box>
+              <Box flex="1">
               {trip.title && (
   <Text fontStyle="italic" fontSize="sm" mt={1}>
     {trip.title}
   </Text>
 )}
-
-              <Box flex="1">
                 <Heading size="md">{trip.name}</Heading>
                 <Text fontSize="sm" color="gray.500">
                   Added on {new Date(trip.addedAt).toLocaleDateString()}
@@ -71,7 +80,7 @@ export default function MyTrips() {
                   <Button as={Link} to={`/destination/${trip.id}`} size="sm" colorScheme="blue">
                     View Details
                   </Button>
-                  <Button colorScheme="red" size="sm" onClick={() => removePlannedTrip(trip.id)}>
+                  <Button colorScheme="red" size="sm" onClick={() => handleDelete(trip.id)}>
                     Delete
                   </Button>
                 </Stack>
@@ -123,7 +132,7 @@ export default function MyTrips() {
                 <Button as={Link} to={`/destination/${trip.id}`} size="sm" colorScheme="blue">
                     View Details
                   </Button>
-                  <Button colorScheme="red" size="sm" onClick={() => removePlannedTrip(trip.id)}>
+                  <Button colorScheme="red" size="sm" onClick={() => handleDelete(trip.id)}>
                     Delete
                   </Button>
                       

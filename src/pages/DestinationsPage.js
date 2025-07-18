@@ -1,5 +1,3 @@
-// src/pages/DestinationsPage.js
-
 import {
   Box,
   Heading,
@@ -11,7 +9,6 @@ import {
   HStack,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import { MdStar } from 'react-icons/md';
 import destinations from '../data/destinations';
 
 const DestinationsPage = () => {
