@@ -1,4 +1,4 @@
-🌍 Tourism Guide App
+## 🌍 Tourism Guide App
 
 ### 📋 Overview
 
@@ -24,7 +24,7 @@ Trip management: Add, view, edit, remove trips
 Modal components for trip editing/adding
 Clean UI with Chakra UI styling
 
-📂 Project Structure
+### 📂 Project Structure
 src/
 ├── App.js                   # Routing & layout
 ├── index.js                # App entry
@@ -49,20 +49,21 @@ npm start
 Build for production
 npm run build
 
-#### 🔍 Features Overview
-## 🏠 Home Page
+### 🔍 Features Overview
+### 🏠 Home Page
 Destination search bar
 Destination grid preview
 "View Details" button navigates to detail page
 
-## 🗺 Destination Details
+### 🗺 Destination Details
 Shows info, attractions, food, trip data
 Buttons: "Add to My Trips", "Book Now"
-## 📌 My Trips Page
+
+### 📌 My Trips Page
 Saved destinations list
 Planned trips with edit options via modals
 
-## 📸 Screenshots
+### 📸 Screenshots
 Add screenshots inside public/screenshots and update the markdown here:
 ![Home](public/screenshots/HomePage.png)
 ![Details](public/screenshots/DestinationsDetails.png)
