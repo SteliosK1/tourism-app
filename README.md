@@ -1,4 +1,4 @@
-## 🌍 Tourism Guide App stelios
+## 🌍 Tourism Guide App 
 
 ### 📋 Overview
 
