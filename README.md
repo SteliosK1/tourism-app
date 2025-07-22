@@ -65,9 +65,9 @@ Planned trips with edit options via modals
 
 ### 📸 Screenshots
 Add screenshots inside public/screenshots and update the markdown here:
-![Home](public/screenshots/HomePage.png)
-![Details](public/screenshots/DestinationsDetails.png)
-![Trips](public/screenshots/MyTrips.png)
+![Home](frontend/public/screenshots/HomePage.png)
+![Details](frontend/public/screenshots/DestinationsDetails.png)
+![Trips](frontend/public/screenshots/MyTrips.png)
 
 ### ✅ Success Criteria (from assignment)
  Routing across all pages
