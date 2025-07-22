@@ -9,16 +9,29 @@ import {
   ListItem
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import destinations from '../data/destinations';
 import { useTrips } from '../hooks/useTrips';
 import { useToast } from '@chakra-ui/react';
 import { AddTripModal } from '../components/AddTripModal';
+import React, { useEffect, useState } from 'react';
 
-function DestinationDetails() {
+const DestinationDetails = () => {
   const { id } = useParams();
-  const destination = destinations.find((d) => d.id === Number(id));
-  const { addTrip, trips } = useTrips();
-  const toast = useToast();
+  const [destination, setDestination] = useState(null);
+  const toast = useToast(); 
+  const [trips, setTrips] = useState([]);
+  const addTrip = (trip) => {
+    setTrips([...trips, trip]);
+  };
+
+  useEffect(() => {
+    fetch('http://localhost:5050/api/destinations')
+      .then((res) => res.json())
+      .then((data) => {
+        const found = data.find((d) => d.id === parseInt(id));
+        setDestination(found);
+      })
+      .catch((err) => console.error('Failed to fetch destination:', err));
+  }, [id]);
 
   if (!destination) {
     return (
@@ -32,7 +45,8 @@ function DestinationDetails() {
     <Box maxW="1200px" mx="auto" mt={6} px={4}>
       {/* Banner */}
       <Box
-        bgImage={`url(${destination.image})`}
+        bgImage={`url(${destination.image_url
+        })`}
         bgSize="cover"
         bgPosition="center"
         bgRepeat="no-repeat"

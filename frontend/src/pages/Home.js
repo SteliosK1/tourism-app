@@ -12,16 +12,25 @@ import {
   HStack
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import destinations from '../data/destinations';
 
 function Home() {
+  const [destinations, setDestinations] = useState([]);
   const [search, setSearch] = useState('');
   const filtered = destinations.filter(dest =>
     dest.name.toLowerCase().includes(search.toLowerCase())
   );
+  
 
+  useEffect(() => {
+    fetch('http://localhost:5050/api/destinations')
+      .then(res => res.json())
+      .then(data => setDestinations(data))
+      .catch(err => console.error(err));
+  }, []);
+  
+  
   return (
     <>
       {/* ✅ HERO SECTION */}
@@ -77,7 +86,7 @@ function Home() {
               bg="white"
               boxShadow="sm"
             >
-              <Image src={dest.image} alt={dest.name} height="200px" width="100%" objectFit="cover" />
+              <Image src={dest.image_url} alt={dest.name} height="200px" width="100%" objectFit="cover" />
               <Box p={4}>
                 <Heading size="md" mb={2}>{dest.name}</Heading>
                 <Text mb={2}>{dest.description}</Text>

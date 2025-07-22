@@ -1,4 +1,4 @@
-const destinations = [
+module.exports = [
   {
     id: 1,
     name: "Paris, France",
@@ -19,7 +19,7 @@ const destinations = [
       language: "French",
       cost: "€80–120/day"
     },
-      image: "https://media-cdn.tripadvisor.com/media/photo-c/1280x250/17/15/6d/d6/paris.jpg"
+      image: '/images/paris.jpg'
     },
     {
       id: 2,
@@ -40,7 +40,7 @@ const destinations = [
         language: "Japanese",
         cost: "¥9000–15000/day"
       },rating: 4.9,
-      image: "https://www.hilton.com/im/en/NoHotel/19361896/shutterstock-667925704.jpg?impolicy=crop&cw=3800&ch=2533&gravity=NorthWest&xposition=0&yposition=1&rw=1280&rh=856"
+      image: '/images/japan.jpg'
     },
     {
       id: 3,
@@ -61,7 +61,7 @@ const destinations = [
         language: "English",
         cost: "$150–250/day"
       },rating: 4.6,
-      image: "https://t3.ftcdn.net/jpg/02/09/70/56/360_F_209705645_b78HGJI1i1mxqLwMYA7z1m3VvCxgxJFO.jpg"
+      image: '/images/new_york_city.jpg'
     },
     {
       id: 4,
@@ -83,10 +83,8 @@ const destinations = [
         cost: "$120–200/day"
       },
       rating: 4.3,
-      image: "https://media.timeout.com/images/105212586/750/562/image.jpg"
+      image: '/images/rome.jpg'
     }
     
   ];
-  
-  export default destinations;
   
