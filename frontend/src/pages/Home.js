@@ -86,7 +86,7 @@ function Home() {
               bg="white"
               boxShadow="sm"
             >
-              <Image src={dest.image_url} alt={dest.name} height="200px" width="100%" objectFit="cover" />
+              <Image src={dest.image} alt={dest.name} height="200px" width="100%" objectFit="cover" />
               <Box p={4}>
                 <Heading size="md" mb={2}>{dest.name}</Heading>
                 <Text mb={2}>{dest.description}</Text>

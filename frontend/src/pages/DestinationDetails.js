@@ -45,7 +45,7 @@ const DestinationDetails = () => {
     <Box maxW="1200px" mx="auto" mt={6} px={4}>
       {/* Banner */}
       <Box
-        bgImage={`url(${destination.image_url
+        bgImage={`url(${destination.image
         })`}
         bgSize="cover"
         bgPosition="center"
@@ -108,10 +108,10 @@ const DestinationDetails = () => {
         <Box bg="gray.50" p={4} borderRadius="md" flex={1}>
           <Heading size="md" mb={4}>Trip Information</Heading>
           <Stack spacing={2} mb={6}>
-            <Text><strong>Best Time to Visit:</strong> {destination.tripInfo?.bestTime}</Text>
-            <Text><strong>Currency:</strong> {destination.tripInfo?.currency}</Text>
-            <Text><strong>Language:</strong> {destination.tripInfo?.language}</Text>
-            <Text><strong>Average Cost:</strong> {destination.tripInfo?.cost}</Text>
+            <Text><strong>Best Time to Visit:</strong> {destination.trip_info?.bestTime}</Text>
+            <Text><strong>Currency:</strong> {destination.trip_info?.currency}</Text>
+            <Text><strong>Language:</strong> {destination.trip_info?.language}</Text>
+            <Text><strong>Average Cost:</strong> {destination.trip_info?.cost}</Text>
           </Stack>
 
           <Stack spacing={3}>
