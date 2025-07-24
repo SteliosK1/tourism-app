@@ -18,7 +18,7 @@ export default function MyTrips() {
   const { trips, updateTrip, removeTrip } = useTrips();
   const toast = useToast();
   const saved = trips.filter((trip) => trip.status === "saved");
-  const planned = trips.filter(trip => trip.status?.toLowerCase() === 'planning');
+  const planned = trips.filter(trip => trip.status?.toLowerCase() === 'planning'|| trip.status?.toLowerCase() === 'confirmed');
   const handleDelete = (id) => {
     removeTrip(id); 
     toast({

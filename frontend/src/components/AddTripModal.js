@@ -20,6 +20,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { CalendarIcon } from '@chakra-ui/icons';
 import React, { forwardRef } from 'react';
 
+
 export function AddTripModal({ destination, onSave }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [startDate, setStartDate] = useState(null);
@@ -69,7 +70,6 @@ export function AddTripModal({ destination, onSave }) {
       });
     }
   };
-  
 
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <Button onClick={onClick} ref={ref} leftIcon={<CalendarIcon />} size="sm">
@@ -116,6 +116,7 @@ export function AddTripModal({ destination, onSave }) {
               <FormLabel>Status</FormLabel>
               <Select value={status} onChange={(e) => setStatus(e.target.value)}>
                 <option value="Planning">Planning</option>
+                <option value="Confirmed">Confirmed</option>
               </Select>
             </FormControl>
           </ModalBody>
