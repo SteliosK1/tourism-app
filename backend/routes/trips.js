@@ -6,7 +6,7 @@ const db = require('../db');
 router.get('/', async (req, res) => {
   try {
     const result = await db.query(`
-      SELECT trips.*, destinations.name, destinations.image, destinations.description
+      SELECT trips.*, destinations.name, destinations.image, destinations.description, destinations.tagline
       FROM trips
       JOIN destinations ON trips.destination_id = destinations.id
       ORDER BY trips.id DESC

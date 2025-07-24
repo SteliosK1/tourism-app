@@ -66,16 +66,20 @@ export default function MyTrips() {
                 />
               </Box>
               <Box flex="1">
-              {trip.title && (
-  <Text fontStyle="italic" fontSize="sm" mt={1}>
-    {trip.title}
-  </Text>
-)}
                 <Heading size="md">{trip.name}</Heading>
-                <Text fontSize="sm" color="gray.500">
-                  Added on {new Date(trip.addedAt).toLocaleDateString()}
-                </Text>
-                <Text my={2}>{trip.tagline}</Text>
+               <p>
+                  Added on{' '}
+                  {trip.added_at
+                  ? new Date(trip.added_at).toLocaleDateString('en-GB') // ή 'el-GR' αν θες ελληνική μορφή
+                  : 'N/A'}
+                </p>
+
+                {/* ✅ Εδώ μπαίνει το tagline */}
+                <Text mt={1} mb={2} fontSize="sm" color="gray.700" fontStyle={'italic'}>
+                    {trip.tagline}
+                  </Text>
+
+
                 <Stack direction="row">
                 <Button as={Link} to={`/destination/${trip.destination_id}`} size="sm" colorScheme="blue">
                   View Details
@@ -120,18 +124,19 @@ export default function MyTrips() {
                 />
               </Box>
               <Box flex="1">
+                <Text>{trip.title}</Text>
                 <Heading size="md">{trip.name}</Heading>
                 <Text fontSize="sm" color="gray.500">
                 Dates: {new Date(trip.start_date).toLocaleDateString()} – {new Date(trip.end_date).toLocaleDateString()}
                 </Text>
                 <Text>Destination: {trip.name}</Text>
                 <Badge colorScheme={
-  trip.status === 'Confirmed' ? 'green' :
-  trip.status === 'Planning' ? 'yellow' :
-  'gray'
-}>
-  Status: {trip.status}
-</Badge>
+                  trip.status === 'Confirmed' ? 'green' :
+                  trip.status === 'Planning' ? 'yellow' :
+                  'gray'
+                }>
+                  Status: {trip.status}
+                </Badge>
                 <Stack direction="row" mt={3}>
                 <Button as={Link} to={`/destination/${trip.destination_id}`} size="sm" colorScheme="blue">
                   View Details
