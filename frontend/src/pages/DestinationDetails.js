@@ -136,9 +136,28 @@ const DestinationDetails = () => {
         </Box>
 
         <Flex gap={4}>
-          <Button colorScheme="blue" onClick={() => createTrip(destination)}>
-            Add to My Trips
-          </Button>
+        <Button
+  colorScheme="blue"
+  onClick={async () => {
+    await createTrip({
+      destination_id: destination.id,
+      title: destination.name,
+      start_date: null,
+      end_date: null,
+      status: "saved", // 👈 εδώ είναι το σημαντικό
+    });
+
+    toast({
+      title: "Trip saved to your trips!",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+    });
+  }}
+>
+  Add to My Trips
+</Button>
+
           <AddTripModal
   destination={destination}
   onSave={async (tripData) => {

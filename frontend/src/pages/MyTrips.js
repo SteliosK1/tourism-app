@@ -17,8 +17,8 @@ import { useTrips } from '../hooks/useTrips';
 export default function MyTrips() {
   const { trips, updateTrip, removeTrip } = useTrips();
   const toast = useToast();
-  const saved = trips.filter((t) => !t.startDate);
-  const planned = trips.filter((t) => t.startDate);  
+  const saved = trips.filter((trip) => trip.status === "saved");
+  const planned = trips.filter(trip => trip.status?.toLowerCase() === 'planning');
   const handleDelete = (id) => {
     removeTrip(id); 
     toast({
@@ -122,12 +122,16 @@ export default function MyTrips() {
               <Box flex="1">
                 <Heading size="md">{trip.name}</Heading>
                 <Text fontSize="sm" color="gray.500">
-                  Dates: {new Date(trip.startDate).toLocaleDateString()} – {new Date(trip.endDate).toLocaleDateString()}
+                Dates: {new Date(trip.start_date).toLocaleDateString()} – {new Date(trip.end_date).toLocaleDateString()}
                 </Text>
                 <Text>Destination: {trip.name}</Text>
-                <Badge colorScheme={trip.status === 'Confirmed' ? 'green' : 'yellow'}>
-                  Status: {trip.status}
-                </Badge>
+                <Badge colorScheme={
+  trip.status === 'Confirmed' ? 'green' :
+  trip.status === 'Planning' ? 'yellow' :
+  'gray'
+}>
+  Status: {trip.status}
+</Badge>
                 <Stack direction="row" mt={3}>
                 <Button as={Link} to={`/destination/${trip.destination_id}`} size="sm" colorScheme="blue">
                   View Details

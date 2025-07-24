@@ -40,20 +40,19 @@ export function AddTripModal({ destination, onSave }) {
       });
       return;
     }
-
+  
     const tripData = {
-      ...destination,
+      destination_id: destination.id,
       title: tripTitle,
-      startDate,
-      endDate,
-      status,
-      addedAt: new Date().toISOString(),
+      start_date: startDate,
+      end_date: endDate,
+      status: status, // 👈 Εδώ λες ότι το κλείνεις
     };
-
+  
     try {
-      await onSave(tripData); // this calls addTrip from useTrips
+      await onSave(tripData);
       toast({
-        title: 'Trip added successfully!',
+        title: 'Trip booked successfully!',
         status: 'success',
         duration: 3000,
         isClosable: true,
@@ -69,15 +68,8 @@ export function AddTripModal({ destination, onSave }) {
         position: 'top',
       });
     }
-    await onSave({
-    destination_id: destination.id,
-    title: tripTitle,
-    start_date: startDate,
-    end_date: endDate,
-    status
-  });
-  onClose();
   };
+  
 
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <Button onClick={onClick} ref={ref} leftIcon={<CalendarIcon />} size="sm">
@@ -126,7 +118,6 @@ export function AddTripModal({ destination, onSave }) {
               <FormLabel>Status</FormLabel>
               <Select value={status} onChange={(e) => setStatus(e.target.value)}>
                 <option value="Planning">Planning</option>
-                <option value="Confirmed">Confirmed</option>
               </Select>
             </FormControl>
           </ModalBody>
