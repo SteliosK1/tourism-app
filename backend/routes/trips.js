@@ -20,14 +20,14 @@ router.get('/', async (req, res) => {
 
 // POST /api/trips
 router.post('/', async (req, res) => {
-  const { destination_id, title, startDate, endDate, status } = req.body;
+  const { destination_id, title, start_date, end_date, status } = req.body;
 
   try {
     const result = await db.query(
       `INSERT INTO trips (destination_id, title, start_date, end_date, status)
        VALUES ($1, $2, $3, $4, $5)
        RETURNING *`,
-      [destination_id, title, startDate, endDate, status]
+      [destination_id, title, start_date, end_date, status]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
 // PUT /api/trips/:id
 router.put('/:id', async (req, res) => {
   const id = req.params.id;
-  const { title, startDate, endDate, status } = req.body;
+  const { title, start_date, end_date, status } = req.body;
 
   try {
     const result = await db.query(
@@ -47,7 +47,7 @@ router.put('/:id', async (req, res) => {
        SET title = $1, start_date = $2, end_date = $3, status = $4
        WHERE id = $5
        RETURNING *`,
-      [title, startDate, endDate, status, id]
+      [title, start_date, end_date, status, id]
     );
     res.json(result.rows[0]);
   } catch (err) {
