@@ -152,33 +152,18 @@ const DestinationDetails = () => {
       status: "success",
       duration: 2000,
       isClosable: true,
+      position:"top"
     });
   }}
 >
   Add to My Trips
 </Button>
 
-          <AddTripModal
+<AddTripModal
   destination={destination}
-  onSave={async (tripData) => {
-    try {
-      await createTrip(tripData);
-      toast({
-        title: 'Trip added!',
-        status: 'success',
-        duration: 2000,
-        isClosable: true,
-      });
-    } catch (err) {
-      toast({
-        title: 'Failed to save trip',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-  }}
+  onSave={createTrip}  
 />
+
 
         </Flex>
       </Stack>

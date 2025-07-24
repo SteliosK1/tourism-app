@@ -77,8 +77,6 @@ export function AddTripModal({ destination, onSave }) {
     </Button>
   ));
   
-  
-
   return (
     <>
       <Button colorScheme="teal" onClick={onOpen}>
@@ -88,7 +86,7 @@ export function AddTripModal({ destination, onSave }) {
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add Trip</ModalHeader>
+          <ModalHeader>Add Trip {destination.name}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl mb={4}>
