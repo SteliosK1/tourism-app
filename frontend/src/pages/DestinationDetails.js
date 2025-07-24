@@ -6,32 +6,64 @@ import {
   Stack,
   Button,
   List,
-  ListItem
+  ListItem,
+  useToast,
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { useTrips } from '../hooks/useTrips';
-import { useToast } from '@chakra-ui/react';
 import { AddTripModal } from '../components/AddTripModal';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
 
 const DestinationDetails = () => {
   const { id } = useParams();
   const [destination, setDestination] = useState(null);
-  const toast = useToast(); 
-  const [trips, setTrips] = useState([]);
-  const addTrip = (trip) => {
-    setTrips([...trips, trip]);
-  };
+  const [loading, setLoading] = useState(true);
+  const toast = useToast();
+  const { createTrip } = useTrips();
 
   useEffect(() => {
-    fetch('http://localhost:5050/api/destinations')
-      .then((res) => res.json())
-      .then((data) => {
-        const found = data.find((d) => d.id === parseInt(id));
-        setDestination(found);
-      })
-      .catch((err) => console.error('Failed to fetch destination:', err));
-  }, [id]);
+    const fetchDestination = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5050/api/destinations/${id}`);
+        setDestination(res.data);
+      } catch (err) {
+        console.error('Failed to fetch destination:', err);
+        toast({
+          title: 'Error loading destination.',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDestination();
+  }, [id, toast]);
+
+  // const handleAddTrip = async () => {
+  //   try {
+  //     const newTrip = {
+  //       destination_id: destination.id,
+  //       date: new Date().toISOString().split('T')[0], // placeholder ημερομηνία
+  //     };
+  //     await createTrip(newTrip);
+  //     navigate('/my-trips');
+  //   } catch (err) {
+  //     console.error('Failed to add trip:', err);
+  //   }
+  // };
+
+  if (loading) {
+    return (
+      <Box p={6}>
+        <Text>Loading destination...</Text>
+      </Box>
+    );
+  }
 
   if (!destination) {
     return (
@@ -45,8 +77,7 @@ const DestinationDetails = () => {
     <Box maxW="1200px" mx="auto" mt={6} px={4}>
       {/* Banner */}
       <Box
-        bgImage={`url(${destination.image
-        })`}
+        bgImage={`url(${destination.image})`}
         bgSize="cover"
         bgPosition="center"
         bgRepeat="no-repeat"
@@ -59,94 +90,81 @@ const DestinationDetails = () => {
         position="relative"
         _after={{
           content: '""',
-          position: "absolute",
+          position: 'absolute',
           top: 0,
           left: 0,
-          w: "100%",
-          h: "100%",
-          bg: "rgba(0, 0, 0, 0.4)",
-          borderRadius: "md",
-          zIndex: 0
+          right: 0,
+          bottom: 0,
+          bg: 'blackAlpha.600',
+          zIndex: 0,
         }}
       >
-      <Box position="relative" zIndex={1}>
-        <Heading fontSize="3xl" mb={2}>{destination.name}</Heading>
-        {destination.tagline && (
-          <Text fontSize="md">{destination.tagline}</Text>
-        )}
+        <Heading position="relative" zIndex={1}>
+          {destination.name}
+        </Heading>
+        <Text fontSize="xl" position="relative" zIndex={1}>
+          {destination.tagline}
+        </Text>
       </Box>
-    </Box>
 
+      <Stack spacing={6}>
+        <Box>
+          <Heading size="md" mb={2}>About {destination.name}</Heading>
+          <Text>{destination.description}</Text>
+        </Box>
 
-      <Flex direction={{ base: 'column', md: 'row' }} gap={6}>
-        {/* Left Column */}
-        <Stack spacing={6} flex={3}>
-          {/* About */}
-          <Box bg="gray.50" p={4} borderRadius="md">
-            <Heading size="md" mb={2}>About {destination.name.split(',')[0]}</Heading>
-            <Text>{destination.description}</Text>
-          </Box>
+        <Box>
+          <Heading size="md" mb={2}>🎯 Top Attractions</Heading>
+          <List spacing={1}>
+            {destination.attractions?.map((attraction, idx) => (
+              <ListItem key={idx}>• {attraction}</ListItem>
+            ))}
+          </List>
+        </Box>
 
-          {/* Attractions */}
-          <Box bg="gray.50" p={4} borderRadius="md">
-            <Heading size="md" mb={2}>🎯 Top Attractions</Heading>
-            <List spacing={1}>
-              {destination.attractions?.map((item, i) => (
-                <ListItem key={i}>• {item}</ListItem>
-              ))}
-            </List>
-          </Box>
+        <Box>
+          <Heading size="md" mb={2}>🍽 Local Cuisine</Heading>
+          <Text>{destination.cuisine}</Text>
+        </Box>
 
-          {/* Cuisine */}
-          <Box bg="gray.50" p={4} borderRadius="md">
-            <Heading size="md" mb={2}>🍽️ Local Cuisine</Heading>
-            <Text>{destination.cuisine}</Text>
-          </Box>
-        </Stack>
+        <Box>
+          <Heading size="md" mb={2}>Trip Information</Heading>
+          <Text><strong>Best Time to Visit:</strong> {destination.bestTime}</Text>
+          <Text><strong>Currency:</strong> {destination.currency}</Text>
+          <Text><strong>Language:</strong> {destination.language}</Text>
+          <Text><strong>Average Cost:</strong> {destination.average_cost}</Text>
+        </Box>
 
-        {/* Right Column */}
-        <Box bg="gray.50" p={4} borderRadius="md" flex={1}>
-          <Heading size="md" mb={4}>Trip Information</Heading>
-          <Stack spacing={2} mb={6}>
-            <Text><strong>Best Time to Visit:</strong> {destination.trip_info?.bestTime}</Text>
-            <Text><strong>Currency:</strong> {destination.trip_info?.currency}</Text>
-            <Text><strong>Language:</strong> {destination.trip_info?.language}</Text>
-            <Text><strong>Average Cost:</strong> {destination.trip_info?.cost}</Text>
-          </Stack>
-
-          <Stack spacing={3}>
+        <Flex gap={4}>
+          <Button colorScheme="blue" onClick={() => createTrip(destination)}>
+            Add to My Trips
+          </Button>
           <AddTripModal
   destination={destination}
-  onAdd={(tripData) => {
-    const alreadyExists = trips.some((t) => t.id === tripData.id);
-    if (alreadyExists) {
+  onSave={async (tripData) => {
+    try {
+      await createTrip(tripData);
       toast({
-        title: "Already in My Trips",
-        description: `${tripData.name} is already saved.`,
-        status: "info",
-        duration: 3000,
+        title: 'Trip added!',
+        status: 'success',
+        duration: 2000,
         isClosable: true,
-        position: "top",
       });
-    } else {
-      addTrip(tripData);
+    } catch (err) {
       toast({
-        title: "Added to My Trips!",
-        description: `${tripData.name} was successfully saved.`,
-        status: "success",
+        title: 'Failed to save trip',
+        status: 'error',
         duration: 3000,
         isClosable: true,
-        position: "top",
       });
     }
   }}
 />
-            <Button colorScheme="green">Book Now</Button>
-          </Stack>
-        </Box>
-      </Flex>
+
+        </Flex>
+      </Stack>
     </Box>
   );
-}
+};
 
 export default DestinationDetails;

@@ -77,9 +77,9 @@ export default function MyTrips() {
                 </Text>
                 <Text my={2}>{trip.tagline}</Text>
                 <Stack direction="row">
-                  <Button as={Link} to={`/destination/${trip.id}`} size="sm" colorScheme="blue">
-                    View Details
-                  </Button>
+                <Button as={Link} to={`/destination/${trip.destination_id}`} size="sm" colorScheme="blue">
+                  View Details
+                </Button>
                   <Button colorScheme="red" size="sm" onClick={() => handleDelete(trip.id)}>
                     Delete
                   </Button>
@@ -129,9 +129,9 @@ export default function MyTrips() {
                   Status: {trip.status}
                 </Badge>
                 <Stack direction="row" mt={3}>
-                <Button as={Link} to={`/destination/${trip.id}`} size="sm" colorScheme="blue">
-                    View Details
-                  </Button>
+                <Button as={Link} to={`/destination/${trip.destination_id}`} size="sm" colorScheme="blue">
+                  View Details
+                </Button>
                   <Button colorScheme="red" size="sm" onClick={() => handleDelete(trip.id)}>
                     Delete
                   </Button>

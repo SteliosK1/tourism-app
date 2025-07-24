@@ -1,27 +1,28 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const path = require('path');
-
-
-const destinationsRoute = require('./routes/destinations');
 
 const app = express();
-const PORT = process.env.PORT || 5050;
 
-app.use(cors());
+// ✅ middlewares
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, 'public')));
+// ✅ routes
+console.log('📦 Loading destinations routes...');
+const destinationsRoutes = require('./routes/destinations');
+console.log('📦 Loading trips routes...');
+const tripsRoutes = require('./routes/trips');
 
-app.use('/api/destinations', destinationsRoute);
-// ✅ προσθήκη για serve στα public images
-app.use('/images', express.static(path.join(__dirname, 'public/images')));
+app.use('/api/destinations', destinationsRoutes);
+app.use('/api/trips', tripsRoutes);
 
-app.get('/', (req, res) => {
-  res.send('Backend API is running ✅');
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+// ✅ start server
+console.log('✅ Express app loaded successfully');
+app.listen(process.env.PORT || 5050, () => {
+  console.log(`Server running on http://localhost:${process.env.PORT || 5000}`);
 });
