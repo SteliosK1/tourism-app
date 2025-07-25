@@ -109,14 +109,18 @@ function Home() {
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
         {destinations.filter((destination) => destination.rating > 4.5).map(dest => (
 
-            <Box
+              <Box
               key={dest.id}
+              as={RouterLink}
+              to={`/destination/${dest.id}`}
               borderWidth="1px"
               borderRadius="lg"
               overflow="hidden"
               bg="white"
-              boxShadow="sm"
-            >
+              boxShadow="none"
+              _hover={{ cursor: 'pointer', bg: 'gray.100' }} // Προαιρετικά
+              >
+
               <Image src={dest.image} alt={dest.name} height="200px" width="100%" objectFit="cover" />
               <Box p={4}>
                 <Heading size="md" mb={2}>{dest.name}</Heading>
