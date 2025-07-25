@@ -23,17 +23,27 @@ export function EditTripModal({ trip, onSave, isOpen, onClose }) {
   const [endDate, setEndDate] = useState('');
   const [status, setStatus] = useState('Planning');
 
+  // ✅ helper για καθαρή ημερομηνία
+const formatDateOnly = (dateStr) => {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  const year = date.getFullYear();
+  const month = `${date.getMonth() + 1}`.padStart(2, '0');
+  const day = `${date.getDate()}`.padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
   useEffect(() => {
     if (trip) {
       setTitle(trip.title || '');
-      setStartDate(trip.start_date?.split('T')[0] || '');
-      setEndDate(trip.end_date?.split('T')[0] || '');
+      setStartDate(formatDateOnly(trip.start_date));
+      setEndDate(formatDateOnly(trip.end_date));
       setStatus(trip.status || 'Planning');
     }
   }, [trip]);
 
   const handleSave = async () => {
-    if (!title || !startDate || !endDate) {
+    if (!startDate || !endDate) {
       toast({
         title: 'Please fill in all fields.',
         status: 'warning',

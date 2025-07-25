@@ -163,7 +163,7 @@ export default function MyTrips() {
                   <Button colorScheme="red" size="sm" onClick={() => handleDelete(trip.id)}>
                     Delete
                   </Button>
-                  <Button colorScheme="green" onClick={() => handleEditClick(trip)}>
+                  <Button colorScheme="gray" variant="solid" size="sm" onClick={() => handleEditClick(trip)}>
                     Edit
                   </Button>
                       

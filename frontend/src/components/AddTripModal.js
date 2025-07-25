@@ -28,7 +28,14 @@ export function AddTripModal({ destination, onSave }) {
   const [status, setStatus] = useState('Planning');
   const [tripTitle, setTripTitle] = useState('');
   const toast = useToast();
-
+  
+  const formatDateOnly = (date) => {
+    if (!date) return null;
+    const year = date.getFullYear();
+    const month = `${date.getMonth() + 1}`.padStart(2, '0');
+    const day = `${date.getDate()}`.padStart(2, '0');
+    return `${year}-${month}-${day}`; // YYYY-MM-DD χωρίς ώρα
+  };
   const handleSubmit = async () => {
     if (!startDate || !endDate) {
       toast({
@@ -55,11 +62,11 @@ export function AddTripModal({ destination, onSave }) {
     const tripData = {
       destination_id: destination.id,
       title: tripTitle,
-      start_date: startDate,
-      end_date: endDate,
-      status: status, // 👈 Εδώ λες ότι το κλείνεις
+      start_date: formatDateOnly(startDate), // εδώ!
+      end_date: formatDateOnly(endDate),     // εδώ!
+      status: status,
     };
-  
+    
     try {
       await onSave(tripData);
       toast({
