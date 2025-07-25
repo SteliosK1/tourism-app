@@ -66,6 +66,7 @@ export function EditTripModal({ trip, onSave, isOpen, onClose }) {
         status: 'success',
         duration: 2000,
         isClosable: true,
+        position: 'top'
       });
 
       onClose();

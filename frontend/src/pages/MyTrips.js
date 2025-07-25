@@ -36,12 +36,6 @@ export default function MyTrips() {
 
   const handleUpdateTrip = async (id, updatedData) => {
     await updateTrip(id, updatedData);
-    toast({
-      title: 'Trip updated.',
-      status: 'success',
-      duration: 2000,
-      isClosable: true,
-    });
     onClose();
   };
   const handleDelete = (id) => {

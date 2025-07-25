@@ -30,6 +30,16 @@ export function AddTripModal({ destination, onSave }) {
   const toast = useToast();
 
   const handleSubmit = async () => {
+    if (!startDate || !endDate) {
+      toast({
+        title: 'Please fill in all fields including dates.',
+        status: 'warning',
+        duration: 3000,
+        isClosable: true,
+        position: 'top',
+      });
+      return;
+    }
     if (startDate && endDate && startDate.getTime() > endDate.getTime()) {
       toast({
         title: 'Start date cannot be later than end date.',
