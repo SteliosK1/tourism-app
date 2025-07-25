@@ -9,9 +9,9 @@ import {
   Badge,
   Image,
   Button,
-  HStack
+  HStack,
 } from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons';
+import { SearchIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -52,20 +52,51 @@ function Home() {
         </Text>
 
         <Box display="flex" justifyContent="center">
-          <InputGroup maxW="500px" w="100%">
-            <InputLeftElement pointerEvents="none">
-              <SearchIcon color="gray.300" />
-            </InputLeftElement>
-            <Input
-              placeholder="Search destinations..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              bg="white"
-              color="black"
-              borderRadius="md"
-            />
-          </InputGroup>
-        </Box>
+    <Box position="relative" w="100%" maxW="500px">
+    <InputGroup>
+      <InputLeftElement pointerEvents="none">
+        <SearchIcon color="gray.300" />
+      </InputLeftElement>
+      <Input
+        placeholder="Search destinations..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        bg="white"
+        color="black"
+        borderRadius="md"
+      />
+    </InputGroup>
+
+    {search && filtered.length > 0 && (
+      <Box
+        position="absolute"
+        bg="white"
+        color="black"
+        border="1px solid #e2e8f0"
+        borderRadius="md"
+        mt={2}
+        w="100%"
+        zIndex={20}
+        boxShadow="md"
+      >
+        {filtered.slice(0, 5).map((item) => (
+          <Box
+            key={item.id}
+            as={RouterLink}
+            to={`/destination/${item.id}`}
+            px={4}
+            py={2}
+            _hover={{ bg: 'gray.100' }}
+            display="block"
+          >
+            {item.name}
+          </Box>
+        ))}
+      </Box>
+    )}
+  </Box>
+</Box>
+
       </Box>
 
       {/* ✅ DESTINATION SECTION */}
@@ -76,8 +107,8 @@ function Home() {
         <Box height="2px" bg="teal.500" mb={6} />
 
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
-          {filtered.filter((destination) => destination.rating > 4.5)
-          .map(dest => (
+        {destinations.filter((destination) => destination.rating > 4.5).map(dest => (
+
             <Box
               key={dest.id}
               borderWidth="1px"
@@ -105,6 +136,26 @@ function Home() {
             </Box>
           ))}
         </SimpleGrid>
+
+<Box textAlign="center" mt={10} mb={10}>
+  <Button
+    as={RouterLink}
+    to="/destinations"
+    colorScheme="blue"
+    size="sm"
+    borderRadius="full"
+    px={4}
+    py={2}
+    mb={2}
+    color="white"
+    _hover={{ transform: 'scale(1.1)', bg: 'blue.600' }}
+  >
+    <ArrowForwardIcon />
+  </Button>
+  <Text fontSize="md" color="gray.600" fontFamily="italic">
+    Explore All Destinations
+  </Text>
+</Box>
       </Box>
     </>
   );
