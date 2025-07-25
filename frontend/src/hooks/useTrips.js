@@ -37,16 +37,24 @@ export function useTrips() {
     }
   };
 
+  const fetchTrips = async () => {
+    try {
+      const res = await getTrips();
+      setTrips(res.data);
+    } catch (err) {
+      console.error('❌ Failed to fetch trips:', err);
+    }
+  };
+
   const updateTrip = async (id, updatedData) => {
     try {
-      const res = await apiUpdateTrip(id, updatedData);
-      setTrips((prev) =>
-        prev.map((trip) => (trip.id === id ? res.data : trip))
-      );
+      await apiUpdateTrip(id, updatedData);
+      await fetchTrips(); // φέρνει πλήρη δεδομένα με destination join
     } catch (err) {
       console.error('❌ Failed to update trip:', err);
     }
   };
+  
 
   const removeTrip = async (id) => {
     try {

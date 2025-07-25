@@ -9,16 +9,41 @@ import {
   Divider,
   Image,
   useToast,
+  
+  useDisclosure
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { EditTripModal } from '../components/EditTripModal';
 import { useTrips } from '../hooks/useTrips';
+
+
 
 export default function MyTrips() {
   const { trips, updateTrip, removeTrip } = useTrips();
   const toast = useToast();
+
   const saved = trips.filter((trip) => trip.status === "saved");
   const planned = trips.filter(trip => trip.status?.toLowerCase() === 'planning'|| trip.status?.toLowerCase() === 'confirmed');
+  
+  const [selectedTrip, setSelectedTrip] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleEditClick = (trip) => {
+    setSelectedTrip(trip);
+    onOpen();
+  };
+
+  const handleUpdateTrip = async (id, updatedData) => {
+    await updateTrip(id, updatedData);
+    toast({
+      title: 'Trip updated.',
+      status: 'success',
+      duration: 2000,
+      isClosable: true,
+    });
+    onClose();
+  };
   const handleDelete = (id) => {
     removeTrip(id); 
     toast({
@@ -144,21 +169,18 @@ export default function MyTrips() {
                   <Button colorScheme="red" size="sm" onClick={() => handleDelete(trip.id)}>
                     Delete
                   </Button>
+                  <Button colorScheme="green" onClick={() => handleEditClick(trip)}>
+                    Edit
+                  </Button>
                       
-                  <EditTripModal
-                      trip={trip}
-                      onSave={(updatedTrip) => {
-                        updateTrip(updatedTrip);
-                        toast({
-                          title: 'Trip updated',
-                          description: `${updatedTrip.name} has been updated.`,
-                          status: 'success',
-                          duration: 3000,
-                          isClosable: true,
-                          position: 'top',
-                        });
-                      }}
-                    />
+                  {selectedTrip && (
+        <EditTripModal
+          trip={selectedTrip}
+          onSave={handleUpdateTrip}
+          isOpen={isOpen}
+          onClose={onClose}
+        />
+      )}
                   </Stack>
               </Box>
             </Box>

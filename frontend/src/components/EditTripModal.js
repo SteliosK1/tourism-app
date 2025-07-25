@@ -3,49 +3,69 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
+  ModalCloseButton,
   ModalBody,
   ModalFooter,
-  ModalCloseButton,
   Button,
   FormControl,
   FormLabel,
   Input,
   Select,
-  useDisclosure,
-  Alert,
-  AlertIcon,
   useToast,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export function EditTripModal({ trip, onSave }) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [startDate, setStartDate] = useState(trip.startDate || '');
-  const [endDate, setEndDate] = useState(trip.endDate || '');
-  const [status, setStatus] = useState(trip.status || 'Planning');
-  const [showError, setShowError] = useState(false);
+export function EditTripModal({ trip, onSave, isOpen, onClose }) {
   const toast = useToast();
 
+  const [title, setTitle] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [status, setStatus] = useState('Planning');
+
+  useEffect(() => {
+    if (trip) {
+      setTitle(trip.title || '');
+      setStartDate(trip.start_date?.split('T')[0] || '');
+      setEndDate(trip.end_date?.split('T')[0] || '');
+      setStatus(trip.status || 'Planning');
+    }
+  }, [trip]);
+
   const handleSave = async () => {
-    if (startDate && endDate && startDate > endDate) {
-      setShowError(true);
+    if (!title || !startDate || !endDate) {
+      toast({
+        title: 'Please fill in all fields.',
+        status: 'warning',
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    if (startDate > endDate) {
+      toast({
+        title: 'Start date must be before end date.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
       return;
     }
 
     try {
       await onSave(trip.id, {
-        ...trip,
-        startDate,
-        endDate,
+        title,
+        start_date: startDate,
+        end_date: endDate,
         status,
       });
 
       toast({
-        title: 'Trip updated!',
+        title: 'Trip updated successfully.',
         status: 'success',
-        duration: 3000,
+        duration: 2000,
         isClosable: true,
-        position: 'top',
       });
 
       onClose();
@@ -55,65 +75,57 @@ export function EditTripModal({ trip, onSave }) {
         status: 'error',
         duration: 3000,
         isClosable: true,
-        position: 'top',
       });
     }
   };
 
   return (
-    <>
-      <Button size="sm" variant="outline" onClick={onOpen}>
-        Edit Trip
-      </Button>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Edit Trip</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody pb={6}>
+          <FormControl mb={3}>
+            <FormLabel>Title</FormLabel>
+            <Input value={title} onChange={(e) => setTitle(e.target.value)} />
+          </FormControl>
 
-      <Modal isOpen={isOpen} onClose={onClose} isCentered>
-        <ModalOverlay />
-        <ModalContent maxW={{ base: '90%', sm: '400px', md: '500px' }} mx="auto" borderRadius="lg">
-          <ModalHeader>Edit Trip to {trip.name}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            {showError && (
-              <Alert status="error" mb={4}>
-                <AlertIcon />
-                Start date must be before end date.
-              </Alert>
-            )}
+          <FormControl mb={3}>
+            <FormLabel>Start Date</FormLabel>
+            <Input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </FormControl>
 
-            <FormControl mb={4}>
-              <FormLabel>Start Date</FormLabel>
-              <Input
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-              />
-            </FormControl>
+          <FormControl mb={3}>
+            <FormLabel>End Date</FormLabel>
+            <Input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </FormControl>
 
-            <FormControl mb={4}>
-              <FormLabel>End Date</FormLabel>
-              <Input
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </FormControl>
+          <FormControl>
+            <FormLabel>Status</FormLabel>
+            <Select value={status} onChange={(e) => setStatus(e.target.value)}>
+              <option value="planning">Planning</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="saved">Saved</option>
+            </Select>
+          </FormControl>
+        </ModalBody>
 
-            <FormControl mb={4}>
-              <FormLabel>Status</FormLabel>
-              <Select value={status} onChange={(e) => setStatus(e.target.value)}>
-                <option value="Planning">Planning</option>
-                <option value="Confirmed">Confirmed</option>
-              </Select>
-            </FormControl>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button onClick={handleSave} colorScheme="blue" mr={3}>
-              Save
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
+        <ModalFooter>
+          <Button onClick={handleSave} colorScheme="blue" mr={3}>
+            Save
+          </Button>
+          <Button onClick={onClose}>Cancel</Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 }
