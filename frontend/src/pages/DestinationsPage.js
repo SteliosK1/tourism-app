@@ -55,9 +55,9 @@ const DestinationsPage = () => {
 
   return (
     <Box maxW="1200px" mx="auto" mt={12} px={4}>
-        <Flex justify="space-between" align="center" mb={6} wrap="wrap">
+        <Flex justify="space-between" align="center" mb={4} wrap="wrap">
   <Heading fontSize="2xl" color="teal.500" mb={{ base: 2, md: 0 }}>
-    📍 Popular Destinations
+    📍 All Destinations
   </Heading>
   <InputGroup maxW="400px" ml={{ base: 0, md: 'auto' }}>
     <InputLeftElement pointerEvents="none">

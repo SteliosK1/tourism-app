@@ -121,6 +121,7 @@ export function AddTripModal({ destination, onSave }) {
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
                 customInput={<CustomInput />}
+                dateFormat="dd/MM/yyyy"
               />
             </FormControl>
 
@@ -130,6 +131,7 @@ export function AddTripModal({ destination, onSave }) {
                 selected={endDate}
                 onChange={(date) => setEndDate(date)}
                 customInput={<CustomInput />}
+                 dateFormat="dd/MM/yyyy"
               />
             </FormControl>
 
