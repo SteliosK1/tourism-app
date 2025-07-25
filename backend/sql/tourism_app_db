@@ -5,7 +5,7 @@
 -- Dumped from database version 14.18 (Homebrew)
 -- Dumped by pg_dump version 17.0
 
--- Started on 2025-07-24 03:58:43 EEST
+-- Started on 2025-07-25 15:23:37 EEST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -161,21 +161,6 @@ COPY public.destinations (id, name, image, tagline, description, attractions, cu
 --
 
 COPY public.trips (id, destination_id, title, start_date, end_date, status, added_at) FROM stdin;
-1	\N	\N	\N	\N	\N	2025-07-24 02:43:25.63263
-2	\N	\N	\N	\N	\N	2025-07-24 02:43:36.093318
-3	\N	sasadad	2025-07-24	2025-07-24	Planning	2025-07-24 02:45:29.829866
-4	\N	\N	\N	\N	\N	2025-07-24 02:48:34.395007
-5	\N	\N	\N	\N	\N	2025-07-24 03:10:50.137713
-6	\N	\N	\N	\N	\N	2025-07-24 03:11:23.008403
-7	\N	ς;δασδασ	2025-06-30	2025-07-23	Planning	2025-07-24 03:26:49.079828
-9	\N		\N	\N	Planning	2025-07-24 03:28:41.773826
-11	\N		\N	\N	Planning	2025-07-24 03:32:13.261413
-13	\N		\N	\N	Planning	2025-07-24 03:32:36.954531
-15	\N		\N	\N	Planning	2025-07-24 03:37:20.57205
-17	\N		\N	\N	Planning	2025-07-24 03:50:09.390004
-19	\N		\N	\N	Planning	2025-07-24 03:52:00.185333
-21	\N		\N	\N	Planning	2025-07-24 03:55:45.297554
-23	\N		\N	\N	Planning	2025-07-24 03:56:58.763318
 \.
 
 
@@ -194,7 +179,7 @@ SELECT pg_catalog.setval('public.destinations_id_seq', 4, true);
 -- Name: trips_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.trips_id_seq', 24, true);
+SELECT pg_catalog.setval('public.trips_id_seq', 129, true);
 
 
 --
@@ -234,7 +219,7 @@ REVOKE USAGE ON SCHEMA public FROM PUBLIC;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2025-07-24 03:58:44 EEST
+-- Completed on 2025-07-25 15:23:37 EEST
 
 --
 -- PostgreSQL database dump complete
