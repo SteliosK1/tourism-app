@@ -102,7 +102,11 @@ export function AddTripModal({ destination, onSave }) {
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent
+  width={{ base: '90%', sm: '80%', md: '500px' }}
+  mx="auto"
+>
+
           <ModalHeader>Add Trip {destination.name}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

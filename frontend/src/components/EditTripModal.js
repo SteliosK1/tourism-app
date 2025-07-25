@@ -93,7 +93,11 @@ const formatDateOnly = (dateStr) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent
+  width={{ base: '90%', sm: '80%', md: '500px' }}
+  mx="auto"
+>
+
         <ModalHeader>Edit Trip</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>

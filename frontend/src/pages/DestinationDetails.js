@@ -137,6 +137,7 @@ const DestinationDetails = () => {
 
         <Flex gap={4}>
         <Button
+        mb={10}
   colorScheme="blue"
   onClick={async () => {
     await createTrip({
