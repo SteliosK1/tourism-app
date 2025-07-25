@@ -22,6 +22,7 @@ import {
 import { SearchIcon } from '@chakra-ui/icons';
 import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
+import { MdFilterAlt } from "react-icons/md";
 import { FaSortAlphaDown, FaStar } from 'react-icons/fa';
 import CustomSortIcon from './CustomSortIcon';
 export const getDestinations = () => {
@@ -76,7 +77,8 @@ const DestinationsPage = () => {
   <Heading fontSize="2xl" color="teal.500">
     📍 All Destinations
   </Heading>
-  {/* sort button */}
+
+  {/* filters button */}
     <Flex gap={4} align="center">
     <Menu>
     <Tooltip label="Sort Options">
@@ -90,6 +92,10 @@ const DestinationsPage = () => {
       />
       </Tooltip>
       <MenuList>
+      <MenuItem icon={<MdFilterAlt />}  onClick={() => setSortBy('none')}>
+        Νone
+      </MenuItem>
+
         <MenuItem icon={<FaSortAlphaDown />} onClick={() => setSortBy('alphabetical')}>
           Sort A-Z
         </MenuItem>
@@ -98,6 +104,7 @@ const DestinationsPage = () => {
         </MenuItem>
       </MenuList>
     </Menu>
+
     {/* Search Bar */}
     <Flex
       align="center"
