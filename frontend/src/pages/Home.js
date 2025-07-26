@@ -44,7 +44,7 @@ function Home() {
         // borderBottomRadius={3}
       >
         <Heading fontSize="4xl" mb={4}>
-          Discover Amazing Places stelios
+          Discover Amazing Places
         </Heading>
 
         <Text fontSize="lg" mb={6}>
