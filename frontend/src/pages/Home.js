@@ -109,7 +109,7 @@ function Home() {
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
         {[...destinations]
   .sort((a, b) => b.clicks - a.clicks)  // ταξινόμηση με clicks φθίνουσα
-  .slice(0, 6) // δείξε π.χ. top 6
+  .slice(0, 4) // δείξε π.χ. top 4
   .map(dest => (
               <Box
               key={dest.id}

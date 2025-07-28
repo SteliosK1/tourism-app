@@ -64,6 +64,22 @@ const sortedDestinations = [...filteredDestinations].sort((a, b) => {
   }
   return 0;
 });
+// ✅ Pagination setup
+const [currentPage, setCurrentPage] = useState(1);
+const destinationsPerPage = 4;
+const totalPages = Math.ceil(sortedDestinations.length / destinationsPerPage);
+
+const indexOfLastDestination = currentPage * destinationsPerPage;
+const indexOfFirstDestination = indexOfLastDestination - destinationsPerPage;
+const currentDestinations = sortedDestinations.slice(indexOfFirstDestination, indexOfLastDestination);
+
+const handleNextPage = () => {
+  if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+};
+
+const handlePrevPage = () => {
+  if (currentPage > 1) setCurrentPage(currentPage - 1);
+};
 
 
   if (loading) {
@@ -141,7 +157,8 @@ const sortedDestinations = [...filteredDestinations].sort((a, b) => {
 <Box height="2px" bg="teal.500" mb={6} />
 
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6} mt={6}>
-        {sortedDestinations.map((dest) => (
+        {currentDestinations.map((dest) => (
+
     <Box
       key={dest.id}
       borderWidth="1px"
@@ -171,6 +188,17 @@ const sortedDestinations = [...filteredDestinations].sort((a, b) => {
     </Box>
   ))}
 </SimpleGrid>
+<Flex justify="center" m={6} gap={4}>
+  <Button onClick={handlePrevPage} isDisabled={currentPage === 1}>
+    Previous
+  </Button>
+  <Text alignSelf="center">
+    Page {currentPage} of {totalPages}
+  </Text>
+  <Button onClick={handleNextPage} isDisabled={currentPage === totalPages}>
+    Next
+  </Button>
+</Flex>
 
       </Box>
   );
