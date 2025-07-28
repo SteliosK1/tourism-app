@@ -52,14 +52,18 @@ const DestinationsPage = () => {
   const filteredDestinations = destinations.filter((destination) =>
   destination.name.toLowerCase().includes(searchTerm.toLowerCase())
 );
-  const sortedDestinations = [...filteredDestinations].sort((a, b) => {
-    if (sortBy === 'alphabetical') {
-      return a.name.localeCompare(b.name);
-    } else if (sortBy === 'rating') {
-      return b.rating - a.rating;
-    }
-    return 0;
-  });
+
+const sortedDestinations = [...filteredDestinations].sort((a, b) => {
+  if (sortBy === 'alphabetical') {
+    return a.name.localeCompare(b.name);
+  } else if (sortBy === 'rating') {
+    return b.rating - a.rating;
+  } else if (sortBy === 'clicks' || sortBy === '' || sortBy === 'none') {
+    // Προεπιλογή: ταξινόμηση με clicks φθίνουσα
+    return b.clicks - a.clicks;
+  }
+  return 0;
+});
 
 
   if (loading) {
@@ -152,6 +156,8 @@ const DestinationsPage = () => {
         <Text mb={2}>{dest.description}</Text>
         <HStack justifyContent="space-between">
           <Badge colorScheme="yellow">⭐ {dest.rating}/5</Badge>
+          <Badge colorScheme="purple">🔥 {dest.clicks} clicks</Badge>
+                 
           <Button
             as={RouterLink}
             to={`/destination/${dest.id}`}

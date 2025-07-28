@@ -28,6 +28,10 @@ const DestinationDetails = () => {
       try {
         const res = await axios.get(`http://localhost:5050/api/destinations/${id}`);
         setDestination(res.data);
+
+        // Κλήση για clicks
+        await axios.post(`http://localhost:5050/api/destinations/${id}/click`);
+       
       } catch (err) {
         console.error('Failed to fetch destination:', err);
         toast({

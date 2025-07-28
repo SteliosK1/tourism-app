@@ -107,8 +107,10 @@ function Home() {
         <Box height="2px" bg="teal.500" mb={6} />
 
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
-        {destinations.filter((destination) => destination.rating > 4.5).map(dest => (
-
+        {[...destinations]
+  .sort((a, b) => b.clicks - a.clicks)  // ταξινόμηση με clicks φθίνουσα
+  .slice(0, 6) // δείξε π.χ. top 6
+  .map(dest => (
               <Box
               key={dest.id}
               as={RouterLink}
@@ -127,6 +129,7 @@ function Home() {
                 <Text mb={2}>{dest.description}</Text>
                 <HStack justifyContent="space-between">
                   <Badge colorScheme="yellow">⭐ {dest.rating}/5</Badge>
+                  <Badge colorScheme="purple">🔥 {dest.clicks} clicks</Badge>
                   <Button
                     as={RouterLink}
                     to={`/destination/${dest.id}`}

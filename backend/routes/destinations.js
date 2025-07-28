@@ -29,4 +29,19 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// Update clicks
+router.post('/:id/click', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await db.query(
+      'UPDATE destinations SET clicks = clicks + 1 WHERE id = $1 RETURNING *',
+      [id]
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to update clicks' });
+  }
+});
+
 module.exports = router;
