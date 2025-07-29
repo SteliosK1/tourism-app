@@ -10,6 +10,7 @@ import {
   Image,
   Button,
   HStack,
+  Flex,
 } from '@chakra-ui/react';
 import { SearchIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';
@@ -161,25 +162,33 @@ function Home() {
           ))}
         </SimpleGrid>
 
-<Box textAlign="center" mt={10} mb={10}>
+        <Flex justify="center" m={8}>
   <Button
     as={RouterLink}
     to="/destinations"
-    colorScheme="blue"
     size="lg"
+    rightIcon={<ArrowForwardIcon />}
+    variant="outline"
+    borderColor="teal.500"
+    color="teal.500"
+    _hover={{
+      bg: "teal.50",
+      transform: "translateY(-2px)",
+      boxShadow: "md",
+    }}
+    _active={{
+      transform: "scale(0.98)",
+    }}
+    borderWidth="2px"
     borderRadius="full"
-    px={4}
-    py={2}
-    mb={2}
-    color="white"
-    _hover={{ transform: 'scale(1.1)', bg: 'blue.600' }}
+    px={8}
+    py={6}
+    fontWeight="semibold"
+    transition="all 0.3s ease"
   >
-    <ArrowForwardIcon />
-  </Button>
-  <Text fontSize="md" color="gray.600" fontFamily="italic">
     Explore All Destinations
-  </Text>
-</Box>
+  </Button>
+</Flex>
       </Box>
     </>
   );
