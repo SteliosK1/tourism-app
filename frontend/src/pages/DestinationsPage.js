@@ -17,7 +17,9 @@ import {
   MenuList,
   MenuItem,
   IconButton,
-  Tooltip
+  Tooltip,
+  FormControl,
+  Select,
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { Link as RouterLink } from 'react-router-dom';
@@ -66,7 +68,7 @@ const sortedDestinations = [...filteredDestinations].sort((a, b) => {
 });
 // ✅ Pagination setup
 const [currentPage, setCurrentPage] = useState(1);
-const destinationsPerPage = 4;
+const [destinationsPerPage, setDestinationsPerPage] = useState(4);
 const totalPages = Math.ceil(sortedDestinations.length / destinationsPerPage);
 
 const indexOfLastDestination = currentPage * destinationsPerPage;
@@ -80,6 +82,7 @@ const handleNextPage = () => {
 const handlePrevPage = () => {
   if (currentPage > 1) setCurrentPage(currentPage - 1);
 };
+
 
 
   if (loading) {
@@ -97,10 +100,24 @@ const handlePrevPage = () => {
   <Heading fontSize="2xl" color="teal.500">
     📍 All Destinations
   </Heading>
-
+  
   {/* filters button */}
     <Flex gap={4} align="center">
     <Menu>
+    <FormControl width="60px">
+  <Select
+    value={destinationsPerPage}
+    onChange={(e) => {
+      setDestinationsPerPage(Number(e.target.value));
+      setCurrentPage(1); // Επαναφορά στην πρώτη σελίδα
+    }}
+  >
+    <option value={4}>4</option>
+    <option value={8}>8</option>
+    <option value={12}>12</option>
+    <option value={20}>20</option>
+  </Select>
+</FormControl>
     <Tooltip label="Sort Options">
       <MenuButton
         as={IconButton}

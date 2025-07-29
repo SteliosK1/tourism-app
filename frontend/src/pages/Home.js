@@ -166,7 +166,7 @@ function Home() {
     as={RouterLink}
     to="/destinations"
     colorScheme="blue"
-    size="sm"
+    size="lg"
     borderRadius="full"
     px={4}
     py={2}
