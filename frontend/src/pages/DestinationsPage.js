@@ -161,11 +161,14 @@ const handlePrevPage = () => {
 
     <Box
       key={dest.id}
+      as={RouterLink}
+      to={`/destination/${dest.id}`}
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
       bg="white"
       boxShadow="sm"
+      _hover={{ cursor: 'pointer', bg: 'gray.100' }} // Προαιρετικά
     >
       <Image src={dest.image} alt={dest.name} height="200px" width="100%" objectFit="cover" />
       <Box p={4}>

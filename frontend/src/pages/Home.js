@@ -10,6 +10,7 @@ import {
   Image,
   Button,
   HStack,
+  Center,
 } from '@chakra-ui/react';
 import { SearchIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';
@@ -50,7 +51,7 @@ function Home() {
         <Text fontSize="lg" mb={6}>
           Find your next adventure with our curated travel destinations
         </Text>
-
+      {/* searchbar */}
         <Box display="flex" justifyContent="center">
     <Box position="relative" w="100%" maxW="500px">
     <InputGroup>
@@ -74,23 +75,40 @@ function Home() {
         color="black"
         border="1px solid #e2e8f0"
         borderRadius="md"
-        mt={2}
+        mt={1}
         w="100%"
         zIndex={20}
         boxShadow="md"
       >
         {filtered.slice(0, 5).map((item) => (
-          <Box
-            key={item.id}
-            as={RouterLink}
-            to={`/destination/${item.id}`}
-            px={4}
-            py={2}
-            _hover={{ bg: 'gray.100' }}
-            display="block"
-          >
-            {item.name}
-          </Box>
+         <Box
+         key={item.id}
+         as={RouterLink}
+         to={`/destination/${item.id}`}
+         display="flex"
+         alignItems="center"
+         justifyContent="flex-start"
+         p={2}
+         borderRadius="md"
+         _hover={{ bg: 'gray.100' }}
+         cursor="pointer"
+       >
+         <Image
+           src={item.image}
+           boxSize="50px"
+           borderRadius="md"
+           objectFit="cover"
+         />
+         <Text 
+           fontSize="md" 
+           fontWeight="medium" 
+           textAlign="center" 
+           flex="1"  // παίρνει όλο το υπόλοιπο πλάτος
+         >
+           {item.name}
+         </Text>
+       </Box>
+       
         ))}
       </Box>
     )}
