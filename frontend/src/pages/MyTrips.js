@@ -23,8 +23,10 @@ export default function MyTrips() {
   const { trips, updateTrip, removeTrip } = useTrips();
   const toast = useToast();
 
-  const saved = trips.filter((trip) => trip.status === "saved");
-  const planned = trips.filter(trip => trip.status?.toLowerCase() === 'planning'|| trip.status?.toLowerCase() === 'confirmed');
+  const saved = trips.filter(trip => trip.status?.toLowerCase() === "saved");
+  const planned = trips.filter(trip =>
+    ["planning", "confirmed"].includes(trip.status?.toLowerCase())
+  );
   
   const [selectedTrip, setSelectedTrip] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();

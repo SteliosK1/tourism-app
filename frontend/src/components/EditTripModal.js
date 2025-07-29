@@ -52,8 +52,25 @@ const formatDateOnly = (dateStr) => {
       });
       return;
     }
-
-    if (startDate > endDate) {
+  
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+  
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+  
+    if (start < today) {
+      toast({
+        title: 'Start date cannot be in the past.',
+        description: "Please select a valid start date.",
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+      });
+      return;
+    }
+  
+    if (start > end) {
       toast({
         title: 'Start date must be before end date.',
         status: 'error',
@@ -62,23 +79,23 @@ const formatDateOnly = (dateStr) => {
       });
       return;
     }
-
+  
     try {
       await onSave(trip.id, {
         title,
         start_date: startDate,
         end_date: endDate,
-        status,
+        status: status.toLowerCase(),
       });
-
+  
       toast({
         title: 'Trip updated successfully.',
         status: 'success',
         duration: 2000,
         isClosable: true,
-        position: 'top'
+        position: 'top',
       });
-
+  
       onClose();
     } catch (err) {
       toast({
@@ -89,6 +106,7 @@ const formatDateOnly = (dateStr) => {
       });
     }
   };
+  
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>

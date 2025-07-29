@@ -10,7 +10,6 @@ import {
   Image,
   Button,
   HStack,
-  Center,
 } from '@chakra-ui/react';
 import { SearchIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';

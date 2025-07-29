@@ -14,7 +14,7 @@ import { useTrips } from '../hooks/useTrips';
 import { AddTripModal } from '../components/AddTripModal';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
+import ClickStatsChart from '../components/ClickStatsChart';
 
 const DestinationDetails = () => {
   const { id } = useParams();
@@ -138,6 +138,7 @@ const DestinationDetails = () => {
           <Text><strong>Language:</strong> {destination.language}</Text>
           <Text><strong>Average Cost:</strong> {destination.average_cost}</Text>
         </Box>
+        <ClickStatsChart destinationId={id} />
 
         <Flex gap={4}>
         <Button

@@ -5,7 +5,7 @@
 -- Dumped from database version 14.18 (Homebrew)
 -- Dumped by pg_dump version 17.0
 
--- Started on 2025-07-26 12:39:47 EEST
+-- Started on 2025-07-29 12:12:29 EEST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -50,7 +50,9 @@ CREATE TABLE public.destinations (
     currency text,
     language text,
     average_cost text,
-    rating real
+    rating real,
+    clicks integer DEFAULT 0,
+    last_reset timestamp without time zone DEFAULT now()
 );
 
 
@@ -73,7 +75,7 @@ CREATE SEQUENCE public.destinations_id_seq
 ALTER SEQUENCE public.destinations_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3797 (class 0 OID 0)
+-- TOC entry 3799 (class 0 OID 0)
 -- Dependencies: 209
 -- Name: destinations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -116,7 +118,7 @@ CREATE SEQUENCE public.trips_id_seq
 ALTER SEQUENCE public.trips_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3798 (class 0 OID 0)
+-- TOC entry 3800 (class 0 OID 0)
 -- Dependencies: 211
 -- Name: trips_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -133,7 +135,7 @@ ALTER TABLE ONLY public.destinations ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
--- TOC entry 3641 (class 2604 OID 16623)
+-- TOC entry 3643 (class 2604 OID 16623)
 -- Name: trips id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -141,31 +143,36 @@ ALTER TABLE ONLY public.trips ALTER COLUMN id SET DEFAULT nextval('public.trips_
 
 
 --
--- TOC entry 3788 (class 0 OID 16611)
+-- TOC entry 3790 (class 0 OID 16611)
 -- Dependencies: 210
 -- Data for Name: destinations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.destinations (id, name, image, tagline, description, attractions, cuisine, best_time, currency, language, average_cost, rating) FROM stdin;
-1	Paris, France	/images/paris.jpg	The City of Light	Paris, the capital of France, is renowned for its art, fashion, gastronomy, and culture. The city is home to iconic landmarks like the Eiffel Tower, Notre-Dame Cathedral, and the Louvre Museum.	{"Eiffel Tower","Louvre Museum","Notre-Dame Cathedral",Champs-Élysées,Montmartre}	Experience authentic French cuisine including croissants, macarons, escargot, and world-class wines. Visit local bistros and patisseries for an authentic taste of Paris.	April to October	Euro (€)	French	€80–120/day	4.8
-2	Tokyo, Japan	/images/japan.jpg	Tradition Meets Innovation	Tokyo is a bustling metropolis blending ancient temples with neon-lit skyscrapers. A city of contrasts, culture, and cutting-edge technology.	{"Shibuya Crossing","Tokyo Tower","Meiji Shrine",Akihabara,"Asakusa & Senso-ji Temple"}	Delight in sushi, ramen, tempura, and street snacks from Tsukiji Market and izakayas.	March to May & October to November	Japanese Yen (¥)	Japanese	¥9000–15000/day	4.9
-3	New York, USA	/images/new_york_city.jpg	The City That Never Sleeps	New York is a fast-paced, energetic city known for its skyline, culture, and diversity. From Central Park to Times Square, there's always something happening.	{"Statue of Liberty","Central Park","Times Square","Empire State Building","Broadway Theaters"}	Try New York-style pizza, bagels, international street food, and fine dining from every cuisine imaginable.	April to June & September to November	US Dollar ($)	English	$150–250/day	4.6
-4	Rome, Italy	/images/rome.jpg	The Eternal City	Rome is a historic city filled with ancient ruins, Renaissance art, and vibrant street life. It's a journey through time with every step you take.	{Colosseum,"Trevi Fountain",Pantheon,"Vatican Museums","Roman Forum"}	Indulge in traditional Italian dishes like pasta carbonara, pizza margherita, gelato, and espresso.	April to June & September to October	Euro (€)	Italian	$120–200/day	4.3
+COPY public.destinations (id, name, image, tagline, description, attractions, cuisine, best_time, currency, language, average_cost, rating, clicks, last_reset) FROM stdin;
+3	New York, USA	/images/new_york_city.jpg	The City That Never Sleeps	New York is a fast-paced, energetic city known for its skyline, culture, and diversity. From Central Park to Times Square, there's always something happening.	{"Statue of Liberty","Central Park","Times Square","Empire State Building","Broadway Theaters"}	Try New York-style pizza, bagels, international street food, and fine dining from every cuisine imaginable.	April to June & September to November	US Dollar ($)	English	$150–250/day	4.6	0	2025-07-28 15:49:00.467561
+4	Rome, Italy	/images/rome.jpg	The Eternal City	Rome is a historic city filled with ancient ruins, Renaissance art, and vibrant street life. It's a journey through time with every step you take.	{Colosseum,"Trevi Fountain",Pantheon,"Vatican Museums","Roman Forum"}	Indulge in traditional Italian dishes like pasta carbonara, pizza margherita, gelato, and espresso.	April to June & September to October	Euro (€)	Italian	$120–200/day	4.3	0	2025-07-28 15:49:00.467561
+2	Tokyo, Japan	/images/japan.jpg	Tradition Meets Innovation	Tokyo is a bustling metropolis blending ancient temples with neon-lit skyscrapers. A city of contrasts, culture, and cutting-edge technology.	{"Shibuya Crossing","Tokyo Tower","Meiji Shrine",Akihabara,"Asakusa & Senso-ji Temple"}	Delight in sushi, ramen, tempura, and street snacks from Tsukiji Market and izakayas.	March to May & October to November	Japanese Yen (¥)	Japanese	¥9000–15000/day	4.9	3	2025-07-28 15:49:00.467561
+5	Sydney, Australia	/images/sydney.jpg	Harbour City	Sydney is a vibrant city known for its iconic Opera House, stunning harbour, and golden beaches. It offers a mix of urban excitement and natural beauty.	{"Sydney Opera House","Harbour Bridge","Bondi Beach","Darling Harbour","The Rocks"}	Enjoy fresh seafood, Australian BBQ, and a lively cafe culture across the city.	September to November & March to May	Australian Dollar (A$)	English	A$120–180/day	4.7	0	2025-07-28 15:49:00.467561
+7	Dubai, UAE	/images/dubai.jpg	The Jewel of the Desert	Dubai is known for its luxury shopping, ultramodern architecture, and lively nightlife. It's a dazzling mix of tradition and innovation.	{"Burj Khalifa","Palm Jumeirah","Dubai Mall","Desert Safari","Dubai Marina"}	Experience Middle Eastern delights like shawarma and hummus alongside global fine dining.	November to March	UAE Dirham (AED)	Arabic	AED 500–800/day	4.5	0	2025-07-28 15:49:00.467561
+1	Paris, France	/images/paris.jpg	The City of Light	Paris, the capital of France, is renowned for its art, fashion, gastronomy, and culture. The city is home to iconic landmarks like the Eiffel Tower, Notre-Dame Cathedral, and the Louvre Museum.	{"Eiffel Tower","Louvre Museum","Notre-Dame Cathedral",Champs-Élysées,Montmartre}	Experience authentic French cuisine including croissants, macarons, escargot, and world-class wines. Visit local bistros and patisseries for an authentic taste of Paris.	April to October	Euro (€)	French	€80–120/day	4.8	26	2025-07-28 15:59:38.249233
+6	Barcelona, Spain	/images/barcelona.jpg	The City of Gaudí	Barcelona is famous for its art, architecture, and Mediterranean charm. Explore Gaudí's masterpieces and enjoy the vibrant street life.	{"Sagrada Família","Park Güell","La Rambla","Gothic Quarter","Camp Nou"}	Relish tapas, paella, fresh seafood, and local wines in Barcelona's bustling bars.	May to June & September to October	Euro (€)	Catalan, Spanish	€80–130/day	4.8	1	2025-07-28 15:49:00.467561
+8	Cape Town, South Africa	/images/cape_town.jpg	Where Oceans Meet	Cape Town is known for its breathtaking scenery, Table Mountain, and beautiful beaches. It's a blend of culture, history, and adventure.	{"Table Mountain","Cape of Good Hope","Robben Island","Camps Bay Beach","Kirstenbosch Gardens"}	Enjoy fresh seafood, South African braai (BBQ), and local wines from the Cape Winelands.	November to March	South African Rand (ZAR)	English, Afrikaans	ZAR 1200–2000/day	4.6	0	2025-07-28 15:49:00.467561
 \.
 
 
 --
--- TOC entry 3790 (class 0 OID 16620)
+-- TOC entry 3792 (class 0 OID 16620)
 -- Dependencies: 212
 -- Data for Name: trips; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.trips (id, destination_id, title, start_date, end_date, status, added_at) FROM stdin;
+133	1		2025-07-16	2025-07-31	Planning	2025-07-28 12:57:09.947109
 \.
 
 
 --
--- TOC entry 3799 (class 0 OID 0)
+-- TOC entry 3801 (class 0 OID 0)
 -- Dependencies: 209
 -- Name: destinations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -174,16 +181,16 @@ SELECT pg_catalog.setval('public.destinations_id_seq', 4, true);
 
 
 --
--- TOC entry 3800 (class 0 OID 0)
+-- TOC entry 3802 (class 0 OID 0)
 -- Dependencies: 211
 -- Name: trips_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.trips_id_seq', 132, true);
+SELECT pg_catalog.setval('public.trips_id_seq', 146, true);
 
 
 --
--- TOC entry 3644 (class 2606 OID 16618)
+-- TOC entry 3646 (class 2606 OID 16618)
 -- Name: destinations destinations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -192,7 +199,7 @@ ALTER TABLE ONLY public.destinations
 
 
 --
--- TOC entry 3646 (class 2606 OID 16628)
+-- TOC entry 3648 (class 2606 OID 16628)
 -- Name: trips trips_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -201,7 +208,7 @@ ALTER TABLE ONLY public.trips
 
 
 --
--- TOC entry 3647 (class 2606 OID 16629)
+-- TOC entry 3649 (class 2606 OID 16629)
 -- Name: trips trips_destination_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -210,7 +217,7 @@ ALTER TABLE ONLY public.trips
 
 
 --
--- TOC entry 3796 (class 0 OID 0)
+-- TOC entry 3798 (class 0 OID 0)
 -- Dependencies: 4
 -- Name: SCHEMA public; Type: ACL; Schema: -; Owner: stelioskoutsioumaris
 --
@@ -219,7 +226,7 @@ REVOKE USAGE ON SCHEMA public FROM PUBLIC;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2025-07-26 12:39:47 EEST
+-- Completed on 2025-07-29 12:12:29 EEST
 
 --
 -- PostgreSQL database dump complete

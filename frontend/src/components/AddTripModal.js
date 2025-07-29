@@ -47,6 +47,21 @@ export function AddTripModal({ destination, onSave }) {
       });
       return;
     }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (startDate < today) {
+      toast({
+        title: 'Start date cannot be in the past.',
+        description: "Please select a valid start date.",
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+        position: 'top',
+      });
+      return;
+    }
     if (startDate && endDate && startDate.getTime() > endDate.getTime()) {
       toast({
         title: 'Start date cannot be later than end date.',
@@ -62,9 +77,9 @@ export function AddTripModal({ destination, onSave }) {
     const tripData = {
       destination_id: destination.id,
       title: tripTitle,
-      start_date: formatDateOnly(startDate), // εδώ!
-      end_date: formatDateOnly(endDate),     // εδώ!
-      status: status,
+      start_date: formatDateOnly(startDate), 
+      end_date: formatDateOnly(endDate),     
+      status: status.toLowerCase(), 
     };
     
     try {
@@ -135,13 +150,15 @@ export function AddTripModal({ destination, onSave }) {
               />
             </FormControl>
 
-            <FormControl mb={4}>
-              <FormLabel>Status</FormLabel>
-              <Select value={status} onChange={(e) => setStatus(e.target.value)}>
-                <option value="Planning">Planning</option>
-                <option value="Confirmed">Confirmed</option>
-              </Select>
-            </FormControl>
+            <FormControl mb={3}>
+  <FormLabel>Status</FormLabel>
+  <Select value={status} onChange={(e) => setStatus(e.target.value)}>
+    <option value="planning">Planning</option>
+    <option value="confirmed">Confirmed</option>
+    <option value="saved">Saved</option>
+  </Select>
+</FormControl>
+
           </ModalBody>
 
           <ModalFooter>
