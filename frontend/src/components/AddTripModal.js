@@ -160,7 +160,6 @@ export function AddTripModal({ destination, onSave }) {
 </FormControl>
 
           </ModalBody>
-
           <ModalFooter>
             <Button onClick={handleSubmit} colorScheme="blue" mr={3}>
               Save Trip

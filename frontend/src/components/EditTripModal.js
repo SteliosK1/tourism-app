@@ -142,14 +142,15 @@ const formatDateOnly = (dateStr) => {
             />
           </FormControl>
 
-          <FormControl>
-            <FormLabel>Status</FormLabel>
-            <Select value={status} onChange={(e) => setStatus(e.target.value)}>
-              <option value="planning">Planning</option>
-              <option value="confirmed">Confirmed</option>
-              <option value="saved">Saved</option>
-            </Select>
-          </FormControl>
+          <FormControl mb={3}>
+  <FormLabel>Status</FormLabel>
+  <Select value={status} onChange={(e) => setStatus(e.target.value)}>
+    <option value="planning">Planning</option>
+    <option value="confirmed">Confirmed</option>
+    <option value="saved">Saved</option>
+  </Select>
+</FormControl>
+
         </ModalBody>
 
         <ModalFooter>

@@ -151,13 +151,18 @@ export default function MyTrips() {
                 Dates: {new Date(trip.start_date).toLocaleDateString()} – {new Date(trip.end_date).toLocaleDateString()}
                 </Text>
                 <Text>Destination: {trip.name}</Text>
-                <Badge colorScheme={
-                  trip.status === 'Confirmed' ? 'green' :
-                  trip.status === 'Planning' ? 'yellow' :
-                  'gray'
-                }>
-                  Status: {trip.status}
+                <Badge
+                  colorScheme={
+                    trip.status?.toLowerCase() === "planning"
+                      ? "yellow"
+                      : trip.status?.toLowerCase() === "confirmed"
+                      ? "green"
+                      : "gray"
+                  }
+                >
+                  {trip.status}
                 </Badge>
+
                 <Stack direction="row" mt={3}>
                 <Button as={Link} to={`/destination/${trip.destination_id}`} size="sm" colorScheme="blue">
                   View Details
