@@ -133,7 +133,7 @@ const DestinationDetails = () => {
 
         <Box>
           <Heading size="md" mb={2}>Trip Information</Heading>
-          <Text><strong>Best Time to Visit:</strong> {destination.bestTime}</Text>
+          <Text><strong>Best Time to Visit:</strong> {destination.best_time}</Text>
           <Text><strong>Currency:</strong> {destination.currency}</Text>
           <Text><strong>Language:</strong> {destination.language}</Text>
           <Text><strong>Average Cost:</strong> {destination.average_cost}</Text>
