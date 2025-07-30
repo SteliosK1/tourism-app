@@ -252,8 +252,8 @@ const handlePrevPage = () => {
 {showScrollTop && (
   <Button
     position="fixed"
-    bottom="30px"
-    right="30px"
+    bottom="100px"
+    right="20px"
     colorScheme="teal"
     borderRadius="full"
     boxShadow="md"

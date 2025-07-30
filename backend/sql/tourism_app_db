@@ -5,7 +5,7 @@
 -- Dumped from database version 14.18 (Homebrew)
 -- Dumped by pg_dump version 17.0
 
--- Started on 2025-07-30 11:07:22 EEST
+-- Started on 2025-07-30 17:01:53 EEST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -354,6 +354,70 @@ COPY public.destination_clicks (id, destination_id, click_date) FROM stdin;
 284	4	2025-07-30 10:51:41.703642
 285	4	2025-07-30 10:51:42.857344
 286	2	2025-07-30 11:04:57.779278
+287	9	2025-07-30 11:21:23.127388
+288	9	2025-07-30 11:23:55.087574
+289	9	2025-07-30 11:24:00.665941
+290	9	2025-07-30 11:24:00.84601
+291	9	2025-07-30 11:24:01.023539
+292	9	2025-07-30 11:24:01.358743
+293	9	2025-07-30 11:24:01.531614
+294	9	2025-07-30 11:24:01.870259
+295	9	2025-07-30 11:24:02.033246
+296	9	2025-07-30 11:24:02.360594
+297	1	2025-07-30 11:25:35.188052
+298	9	2025-07-30 11:25:57.841714
+299	2	2025-07-30 11:26:36.608446
+300	2	2025-07-30 11:27:15.041474
+301	9	2025-07-30 11:28:14.621501
+302	1	2025-07-30 11:29:43.759133
+303	1	2025-07-30 11:32:47.184127
+304	1	2025-07-30 11:34:59.017338
+305	3	2025-07-30 11:35:20.136963
+306	1	2025-07-30 11:36:34.44127
+307	1	2025-07-30 11:41:09.001097
+308	1	2025-07-30 11:42:48.226905
+309	1	2025-07-30 11:47:21.992758
+310	3	2025-07-30 11:48:10.299619
+311	1	2025-07-30 11:48:46.126912
+312	1	2025-07-30 11:52:20.283264
+313	1	2025-07-30 12:20:04.13274
+314	2	2025-07-30 12:20:11.241413
+315	1	2025-07-30 12:24:23.147329
+316	1	2025-07-30 12:25:35.211176
+317	1	2025-07-30 12:25:57.166659
+318	1	2025-07-30 12:26:05.08285
+319	1	2025-07-30 12:35:27.271623
+320	1	2025-07-30 14:39:56.626968
+321	1	2025-07-30 14:49:26.301857
+322	2	2025-07-30 14:59:20.937861
+323	4	2025-07-30 14:59:26.381828
+324	4	2025-07-30 14:59:28.113189
+325	4	2025-07-30 14:59:28.323426
+326	4	2025-07-30 14:59:28.66793
+327	1	2025-07-30 14:59:34.583584
+328	1	2025-07-30 15:40:04.61429
+329	2	2025-07-30 15:50:33.356611
+330	1	2025-07-30 15:50:54.392469
+331	3	2025-07-30 15:53:01.332695
+332	2	2025-07-30 15:54:19.543097
+333	4	2025-07-30 15:59:52.869264
+334	4	2025-07-30 16:08:50.935218
+335	1	2025-07-30 16:09:15.757958
+336	4	2025-07-30 16:09:21.961635
+337	4	2025-07-30 16:09:27.221307
+338	1	2025-07-30 16:09:31.488258
+339	1	2025-07-30 16:09:43.034557
+340	1	2025-07-30 16:13:04.547903
+341	1	2025-07-30 16:19:10.26149
+342	1	2025-07-30 16:19:28.44202
+343	1	2025-07-30 16:20:53.777356
+344	1	2025-07-30 16:29:03.38137
+345	1	2025-07-30 16:30:00.361878
+346	1	2025-07-30 16:30:07.367929
+347	1	2025-07-30 16:41:25.795112
+348	1	2025-07-30 16:41:31.29291
+349	1	2025-07-30 16:41:35.821892
+350	4	2025-07-30 16:45:58.987153
 \.
 
 
@@ -364,14 +428,15 @@ COPY public.destination_clicks (id, destination_id, click_date) FROM stdin;
 --
 
 COPY public.destinations (id, name, image, tagline, description, attractions, cuisine, best_time, currency, language, average_cost, rating, clicks, last_reset) FROM stdin;
-3	New York, USA	/images/new_york_city.jpg	The City That Never Sleeps	New York is a fast-paced, energetic city known for its skyline, culture, and diversity. From Central Park to Times Square, there's always something happening.	{"Statue of Liberty","Central Park","Times Square","Empire State Building","Broadway Theaters"}	Try New York-style pizza, bagels, international street food, and fine dining from every cuisine imaginable.	April to June & September to November	US Dollar ($)	English	$150–250/day	4.6	8	2025-07-28 15:49:00.467561
-4	Rome, Italy	/images/rome.jpg	The Eternal City	Rome is a historic city filled with ancient ruins, Renaissance art, and vibrant street life. It's a journey through time with every step you take.	{Colosseum,"Trevi Fountain",Pantheon,"Vatican Museums","Roman Forum"}	Indulge in traditional Italian dishes like pasta carbonara, pizza margherita, gelato, and espresso.	April to June & September to October	Euro (€)	Italian	$120–200/day	4.3	6	2025-07-28 15:49:00.467561
-2	Tokyo, Japan	/images/japan.jpg	Tradition Meets Innovation	Tokyo is a bustling metropolis blending ancient temples with neon-lit skyscrapers. A city of contrasts, culture, and cutting-edge technology.	{"Shibuya Crossing","Tokyo Tower","Meiji Shrine",Akihabara,"Asakusa & Senso-ji Temple"}	Delight in sushi, ramen, tempura, and street snacks from Tsukiji Market and izakayas.	March to May & October to November	Japanese Yen (¥)	Japanese	¥9000–15000/day	4.9	23	2025-07-28 15:49:00.467561
-7	Dubai, UAE	/images/dubai.jpg	The Jewel of the Desert	Dubai is known for its luxury shopping, ultramodern architecture, and lively nightlife. It's a dazzling mix of tradition and innovation.	{"Burj Khalifa","Palm Jumeirah","Dubai Mall","Desert Safari","Dubai Marina"}	Experience Middle Eastern delights like shawarma and hummus alongside global fine dining.	November to March	UAE Dirham (AED)	Arabic	AED 500–800/day	4.5	1	2025-07-28 15:49:00.467561
-5	Sydney, Australia	/images/sydney.jpg	Harbour City	Sydney is a vibrant city known for its iconic Opera House, stunning harbour, and golden beaches. It offers a mix of urban excitement and natural beauty.	{"Sydney Opera House","Harbour Bridge","Bondi Beach","Darling Harbour","The Rocks"}	Enjoy fresh seafood, Australian BBQ, and a lively cafe culture across the city.	September to November & March to May	Australian Dollar (A$)	English	A$120–180/day	4.7	1	2025-07-28 15:49:00.467561
-6	Barcelona, Spain	/images/barcelona.jpg	The City of Gaudí	Barcelona is famous for its art, architecture, and Mediterranean charm. Explore Gaudí's masterpieces and enjoy the vibrant street life.	{"Sagrada Família","Park Güell","La Rambla","Gothic Quarter","Camp Nou"}	Relish tapas, paella, fresh seafood, and local wines in Barcelona's bustling bars.	May to June & September to October	Euro (€)	Catalan, Spanish	€80–130/day	4.8	1	2025-07-28 15:49:00.467561
+9	Havana, Cuba	/images/havana.jpg	The Pearl of the Caribbean	Havana, the capital of Cuba, is famous for its colorful colonial architecture, vibrant music scene, vintage cars, and rich history. Visitors can explore Old Havana, stroll along the Malecón, and enjoy the city's lively culture.	{"Old Havana (Habana Vieja)",Malecón,"El Capitolio","Plaza de la Revolución","Museo Nacional de Bellas Artes"}	Taste Cuban specialties like ropa vieja, picadillo, arroz con pollo, and delicious tropical cocktails like mojitos and daiquiris.	November to April	Cuban Peso (CUP)	Spanish	€40–70/day	4.6	0	2025-07-30 10:45:00
+3	New York, USA	/images/new_york_city.jpg	The City That Never Sleeps	New York is a fast-paced, energetic city known for its skyline, culture, and diversity. From Central Park to Times Square, there's always something happening.	{"Statue of Liberty","Central Park","Times Square","Empire State Building","Broadway Theaters"}	Try New York-style pizza, bagels, international street food, and fine dining from every cuisine imaginable.	April to June & September to November	US Dollar ($)	English	$150–250/day	4.6	1	2025-07-28 15:49:00.467561
+2	Tokyo, Japan	/images/japan.jpg	Tradition Meets Innovation	Tokyo is a bustling metropolis blending ancient temples with neon-lit skyscrapers. A city of contrasts, culture, and cutting-edge technology.	{"Shibuya Crossing","Tokyo Tower","Meiji Shrine",Akihabara,"Asakusa & Senso-ji Temple"}	Delight in sushi, ramen, tempura, and street snacks from Tsukiji Market and izakayas.	March to May & October to November	Japanese Yen (¥)	Japanese	¥9000–15000/day	4.9	3	2025-07-28 15:49:00.467561
+4	Rome, Italy	/images/rome.jpg	The Eternal City	Rome is a historic city filled with ancient ruins, Renaissance art, and vibrant street life. It's a journey through time with every step you take.	{Colosseum,"Trevi Fountain",Pantheon,"Vatican Museums","Roman Forum"}	Indulge in traditional Italian dishes like pasta carbonara, pizza margherita, gelato, and espresso.	April to June & September to October	Euro (€)	Italian	$120–200/day	4.3	9	2025-07-28 15:49:00.467561
+7	Dubai, UAE	/images/dubai.jpg	The Jewel of the Desert	Dubai is known for its luxury shopping, ultramodern architecture, and lively nightlife. It's a dazzling mix of tradition and innovation.	{"Burj Khalifa","Palm Jumeirah","Dubai Mall","Desert Safari","Dubai Marina"}	Experience Middle Eastern delights like shawarma and hummus alongside global fine dining.	November to March	UAE Dirham (AED)	Arabic	AED 500–800/day	4.5	0	2025-07-28 15:49:00.467561
+5	Sydney, Australia	/images/sydney.jpg	Harbour City	Sydney is a vibrant city known for its iconic Opera House, stunning harbour, and golden beaches. It offers a mix of urban excitement and natural beauty.	{"Sydney Opera House","Harbour Bridge","Bondi Beach","Darling Harbour","The Rocks"}	Enjoy fresh seafood, Australian BBQ, and a lively cafe culture across the city.	September to November & March to May	Australian Dollar (A$)	English	A$120–180/day	4.7	0	2025-07-28 15:49:00.467561
+6	Barcelona, Spain	/images/barcelona.jpg	The City of Gaudí	Barcelona is famous for its art, architecture, and Mediterranean charm. Explore Gaudí's masterpieces and enjoy the vibrant street life.	{"Sagrada Família","Park Güell","La Rambla","Gothic Quarter","Camp Nou"}	Relish tapas, paella, fresh seafood, and local wines in Barcelona's bustling bars.	May to June & September to October	Euro (€)	Catalan, Spanish	€80–130/day	4.8	0	2025-07-28 15:49:00.467561
 8	Cape Town, South Africa	/images/cape_town.jpg	Where Oceans Meet	Cape Town is known for its breathtaking scenery, Table Mountain, and beautiful beaches. It's a blend of culture, history, and adventure.	{"Table Mountain","Cape of Good Hope","Robben Island","Camps Bay Beach","Kirstenbosch Gardens"}	Enjoy fresh seafood, South African braai (BBQ), and local wines from the Cape Winelands.	November to March	South African Rand (ZAR)	English, Afrikaans	ZAR 1200–2000/day	4.6	0	2025-07-28 15:49:00.467561
-1	Paris, France	/images/paris.jpg	The City of Light	Paris, the capital of France, is renowned for its art, fashion, gastronomy, and culture. The city is home to iconic landmarks like the Eiffel Tower, Notre-Dame Cathedral, and the Louvre Museum.	{"Eiffel Tower","Louvre Museum","Notre-Dame Cathedral",Champs-Élysées,Montmartre}	Experience authentic French cuisine including croissants, macarons, escargot, and world-class wines. Visit local bistros and patisseries for an authentic taste of Paris.	April to October	Euro (€)	French	€80–120/day	4.8	245	2025-07-28 15:59:38.249233
+1	Paris, France	/images/paris.jpg	The City of Light	Paris, the capital of France, is renowned for its art, fashion, gastronomy, and culture. The city is home to iconic landmarks like the Eiffel Tower, Notre-Dame Cathedral, and the Louvre Museum.	{"Eiffel Tower","Louvre Museum","Notre-Dame Cathedral",Champs-Élysées,Montmartre}	Experience authentic French cuisine including croissants, macarons, escargot, and world-class wines. Visit local bistros and patisseries for an authentic taste of Paris.	April to October	Euro (€)	French	€80–120/day	4.8	18	2025-07-28 15:59:38.249233
 \.
 
 
@@ -382,6 +447,8 @@ COPY public.destinations (id, name, image, tagline, description, attractions, cu
 --
 
 COPY public.trips (id, destination_id, title, start_date, end_date, status, added_at) FROM stdin;
+165	1		2025-07-31	2025-08-29	planning	2025-07-30 11:35:10.864977
+166	3	New York, USA	\N	\N	saved	2025-07-30 11:35:24.57197
 \.
 
 
@@ -391,7 +458,7 @@ COPY public.trips (id, destination_id, title, start_date, end_date, status, adde
 -- Name: destination_clicks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.destination_clicks_id_seq', 286, true);
+SELECT pg_catalog.setval('public.destination_clicks_id_seq', 350, true);
 
 
 --
@@ -409,7 +476,7 @@ SELECT pg_catalog.setval('public.destinations_id_seq', 4, true);
 -- Name: trips_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.trips_id_seq', 162, true);
+SELECT pg_catalog.setval('public.trips_id_seq', 167, true);
 
 
 --
@@ -475,7 +542,7 @@ REVOKE USAGE ON SCHEMA public FROM PUBLIC;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2025-07-30 11:07:22 EEST
+-- Completed on 2025-07-30 17:01:53 EEST
 
 --
 -- PostgreSQL database dump complete
