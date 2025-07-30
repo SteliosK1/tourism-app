@@ -6,7 +6,7 @@ import MyTrips from './pages/MyTrips';
 import { NavLink } from 'react-router-dom';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import DestinationsPage from './pages/DestinationsPage'; 
-
+import ChatBuddy from './components/ChatBuddy';
 
 
 function App() {
@@ -82,9 +82,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/destination/:id" element={<DestinationDetails />} />
           <Route path="/my-trips" element={<MyTrips />} />
-          <Route path="/destinations" element={<DestinationsPage />} />
+          <Route path="/destinations" element={<DestinationsPage />} />  
         </Routes>
       </Box>
+      <ChatBuddy />
     </Router>
   );
 }

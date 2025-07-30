@@ -21,6 +21,39 @@ const tripsRoutes = require('./routes/trips');
 app.use('/api/destinations', destinationsRoutes);
 app.use('/api/trips', tripsRoutes);
 
+// ✅ NEW ChatBuddy route
+app.post('/api/chat', async (req, res) => {
+  const { messages } = req.body;
+  console.log("📩 Received messages:", messages);
+  console.log("🔑 OpenRouter API Key loaded:", !!process.env.OPENROUTER_API_KEY);
+
+  try {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'z-ai/glm-4.5-air:free', // ✅ Το δωρεάν μοντέλο που έδειξες
+        messages,
+      }),
+    });
+
+    const data = await response.json();
+    console.log("🔍 OpenRouter API Response:", data);
+
+    if (data.error) {
+      return res.status(500).json({ error: data.error.message });
+    }
+
+    res.json({ reply: data.choices[0].message });
+  } catch (err) {
+    console.error("❌ Chat error:", err);
+    res.status(500).json({ error: 'Chat request failed' });
+  }
+});
+
 // ✅ start server
 console.log('✅ Express app loaded successfully');
 app.listen(process.env.PORT || 5050, () => {
