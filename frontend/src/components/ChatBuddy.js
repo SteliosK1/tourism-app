@@ -39,18 +39,28 @@ const ChatBuddy = () => {
   // Αποστολή μηνύματος
   const sendMessage = async () => {
     if (!input.trim()) return;
-
-    // Αν δεν έχουν φορτώσει ακόμα τα destinations
-    if (availableDestinations.length === 0) {
-      alert("Destinations are still loading. Please try again in a moment.");
-      return;
-    }
-
+  
+    // ✅ Έλεγχος για match με destination
+    const matchedDestination = availableDestinations.find((dest) =>
+      input.toLowerCase().includes(dest.name.toLowerCase().split(",")[0]) // Παίρνουμε μόνο την πόλη π.χ. "Paris"
+    );
+  
     const newMessages = [...messages, { role: 'user', content: input }];
     setMessages(newMessages);
     setInput('');
+  
+    // ✅ Αν βρέθηκε destination → προσθέτουμε μήνυμα με link
+    if (matchedDestination) {
+      const linkMessage = {
+        role: 'assistant',
+        content: `I found **${matchedDestination.name}**! 👉 [View details](/destination/${matchedDestination.id})`
+      };
+      setMessages([...newMessages, linkMessage]);
+      return;
+    }
+  
+    // ✅ Αν δεν βρεθεί → συνεχίζουμε με AI
     setLoading(true);
-
     try {
       const res = await fetch('http://localhost:5050/api/chat', {
         method: 'POST',
@@ -61,26 +71,24 @@ const ChatBuddy = () => {
               role: 'system',
               content: `You are a travel assistant for TravelGuide. Only provide information about these destinations: ${availableDestinations
                 .map((d) => d.name)
-                .join(', ')}. If asked about anything else, respond: "Sorry, I can only help with our listed destinations."`
+                .join(', ')}. If asked about anything else, respond: "Sorry, I can only help with our listed destinations."`,
             },
-            ...newMessages.map((m) => ({ role: m.role, content: String(m.content) }))
-          ]
+            ...newMessages.map((m) => ({ role: m.role, content: String(m.content) })),
+          ],
         }),
       });
-
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-
+  
       const data = await res.json();
       setMessages([...newMessages, data.reply]);
     } catch (error) {
       console.error('Chat request failed:', error);
       setMessages([...newMessages, { role: 'assistant', content: "Oops! Something went wrong. Please try again." }]);
     }
-
+  
     setLoading(false);
   };
+  
+  
 
   return (
     <>
@@ -132,7 +140,8 @@ const ChatBuddy = () => {
                 maxW="80%"
                 boxShadow="sm"
               >
-                <Text fontSize="sm">{m.content}</Text>
+                <Text fontSize="sm" dangerouslySetInnerHTML={{ __html: m.content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color: teal; text-decoration: underline;">$1</a>') }} />
+
               </Box>
             ))}
             {loading && <Text fontSize="sm" color="gray.500">Bot is typing...</Text>}
