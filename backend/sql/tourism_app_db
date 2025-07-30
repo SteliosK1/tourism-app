@@ -5,7 +5,7 @@
 -- Dumped from database version 14.18 (Homebrew)
 -- Dumped by pg_dump version 17.0
 
--- Started on 2025-07-29 12:12:29 EEST
+-- Started on 2025-07-30 11:07:22 EEST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -29,9 +29,67 @@ SET row_security = off;
 
 ALTER SCHEMA public OWNER TO stelioskoutsioumaris;
 
+--
+-- TOC entry 215 (class 1255 OID 16675)
+-- Name: increment_destination_clicks(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.increment_destination_clicks() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    UPDATE public.destinations
+    SET clicks = clicks + 1
+    WHERE id = NEW.destination_id;
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.increment_destination_clicks() OWNER TO postgres;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
+
+--
+-- TOC entry 214 (class 1259 OID 16663)
+-- Name: destination_clicks; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.destination_clicks (
+    id integer NOT NULL,
+    destination_id integer NOT NULL,
+    click_date timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.destination_clicks OWNER TO postgres;
+
+--
+-- TOC entry 213 (class 1259 OID 16662)
+-- Name: destination_clicks_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.destination_clicks_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.destination_clicks_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3813 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: destination_clicks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.destination_clicks_id_seq OWNED BY public.destination_clicks.id;
+
 
 --
 -- TOC entry 210 (class 1259 OID 16611)
@@ -75,7 +133,7 @@ CREATE SEQUENCE public.destinations_id_seq
 ALTER SEQUENCE public.destinations_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3799 (class 0 OID 0)
+-- TOC entry 3814 (class 0 OID 0)
 -- Dependencies: 209
 -- Name: destinations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -118,7 +176,7 @@ CREATE SEQUENCE public.trips_id_seq
 ALTER SEQUENCE public.trips_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3800 (class 0 OID 0)
+-- TOC entry 3815 (class 0 OID 0)
 -- Dependencies: 211
 -- Name: trips_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -127,7 +185,15 @@ ALTER SEQUENCE public.trips_id_seq OWNED BY public.trips.id;
 
 
 --
--- TOC entry 3640 (class 2604 OID 16614)
+-- TOC entry 3651 (class 2604 OID 16666)
+-- Name: destination_clicks id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.destination_clicks ALTER COLUMN id SET DEFAULT nextval('public.destination_clicks_id_seq'::regclass);
+
+
+--
+-- TOC entry 3646 (class 2604 OID 16614)
 -- Name: destinations id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -135,7 +201,7 @@ ALTER TABLE ONLY public.destinations ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
--- TOC entry 3643 (class 2604 OID 16623)
+-- TOC entry 3649 (class 2604 OID 16623)
 -- Name: trips id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -143,36 +209,193 @@ ALTER TABLE ONLY public.trips ALTER COLUMN id SET DEFAULT nextval('public.trips_
 
 
 --
--- TOC entry 3790 (class 0 OID 16611)
+-- TOC entry 3806 (class 0 OID 16663)
+-- Dependencies: 214
+-- Data for Name: destination_clicks; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.destination_clicks (id, destination_id, click_date) FROM stdin;
+148	1	2025-07-29 00:00:00
+149	1	2025-07-29 00:00:00
+150	1	2025-07-29 00:00:00
+151	1	2025-07-29 00:00:00
+152	1	2025-07-29 00:00:00
+153	1	2025-07-28 00:00:00
+154	1	2025-07-28 00:00:00
+155	1	2025-07-28 00:00:00
+156	1	2025-07-28 00:00:00
+157	1	2025-07-28 00:00:00
+158	1	2025-07-27 00:00:00
+159	1	2025-07-27 00:00:00
+160	1	2025-07-27 00:00:00
+161	1	2025-07-27 00:00:00
+162	1	2025-07-27 00:00:00
+163	1	2025-07-25 00:00:00
+164	1	2025-07-25 00:00:00
+165	1	2025-07-25 00:00:00
+166	1	2025-07-25 00:00:00
+167	1	2025-07-23 00:00:00
+168	1	2025-07-23 00:00:00
+169	1	2025-07-23 00:00:00
+170	1	2025-07-23 00:00:00
+171	1	2025-07-23 00:00:00
+172	1	2025-07-19 00:00:00
+173	1	2025-07-17 00:00:00
+174	1	2025-07-16 00:00:00
+175	1	2025-07-16 00:00:00
+176	1	2025-07-15 00:00:00
+177	1	2025-07-14 00:00:00
+178	1	2025-07-14 00:00:00
+179	1	2025-07-13 00:00:00
+180	1	2025-07-13 00:00:00
+181	1	2025-07-13 00:00:00
+182	1	2025-07-13 00:00:00
+183	1	2025-07-12 00:00:00
+184	1	2025-07-12 00:00:00
+185	1	2025-07-11 00:00:00
+186	1	2025-07-11 00:00:00
+187	1	2025-07-11 00:00:00
+188	1	2025-07-11 00:00:00
+189	1	2025-07-10 00:00:00
+190	1	2025-07-10 00:00:00
+191	1	2025-07-10 00:00:00
+192	1	2025-07-10 00:00:00
+193	1	2025-07-08 00:00:00
+194	1	2025-07-07 00:00:00
+195	1	2025-07-07 00:00:00
+196	1	2025-07-07 00:00:00
+197	1	2025-07-07 00:00:00
+198	1	2025-07-07 00:00:00
+199	1	2025-07-06 00:00:00
+200	1	2025-07-06 00:00:00
+201	1	2025-07-05 00:00:00
+202	1	2025-07-05 00:00:00
+203	1	2025-07-05 00:00:00
+204	1	2025-07-05 00:00:00
+205	1	2025-07-04 00:00:00
+206	1	2025-07-04 00:00:00
+207	1	2025-07-04 00:00:00
+208	1	2025-07-04 00:00:00
+209	1	2025-07-04 00:00:00
+210	1	2025-07-03 00:00:00
+211	1	2025-07-03 00:00:00
+212	1	2025-07-02 00:00:00
+213	1	2025-07-02 00:00:00
+214	1	2025-07-02 00:00:00
+215	1	2025-07-29 13:33:05.960448
+216	1	2025-07-29 13:37:08.447633
+217	1	2025-07-29 13:38:33.207838
+218	1	2025-07-29 13:38:55.615634
+219	1	2025-07-29 13:41:46.11702
+220	1	2025-07-29 13:43:24.492592
+221	1	2025-07-29 13:46:54.888895
+222	1	2025-07-29 13:47:27.414132
+223	1	2025-07-29 13:47:31.404686
+224	1	2025-07-29 13:47:44.084523
+225	1	2025-07-29 13:47:46.619217
+226	1	2025-07-29 14:29:10.453664
+227	1	2025-07-29 14:31:13.248255
+228	3	2025-07-29 14:34:41.596749
+229	3	2025-07-29 14:34:51.065379
+230	2	2025-07-29 14:34:56.610212
+231	1	2025-07-29 14:34:59.743634
+232	1	2025-07-29 14:42:29.806678
+233	1	2025-07-29 14:42:36.426963
+234	1	2025-07-29 14:42:40.547792
+235	2	2025-07-29 14:59:52.863917
+236	2	2025-07-29 14:59:57.613169
+237	2	2025-07-29 15:00:00.394874
+238	2	2025-07-29 15:00:02.85228
+239	3	2025-07-29 15:00:04.944473
+240	2	2025-07-29 15:02:08.608439
+241	1	2025-07-29 15:02:12.086463
+242	1	2025-07-29 15:02:16.252144
+243	2	2025-07-29 15:03:50.903563
+244	2	2025-07-29 15:03:56.640823
+245	3	2025-07-29 15:04:02.303842
+246	3	2025-07-29 15:04:09.846136
+247	1	2025-07-29 15:12:13.760972
+248	2	2025-07-29 15:15:26.245581
+249	1	2025-07-29 15:16:01.820863
+250	1	2025-07-29 15:16:37.85382
+251	1	2025-07-29 15:18:49.429332
+252	1	2025-07-29 15:23:11.168898
+253	4	2025-07-29 15:27:03.487933
+254	4	2025-07-29 15:27:08.944248
+255	2	2025-07-29 15:29:17.067109
+256	2	2025-07-29 15:31:26.874344
+257	1	2025-07-29 15:37:18.581219
+258	1	2025-07-29 15:41:04.028919
+259	1	2025-07-29 15:41:30.762407
+260	1	2025-07-29 15:51:04.178159
+261	2	2025-07-29 15:54:55.002962
+262	2	2025-07-29 15:55:43.857154
+263	3	2025-07-29 15:56:31.900456
+264	2	2025-07-29 16:17:11.211393
+265	2	2025-07-29 16:21:52.748727
+266	1	2025-07-30 09:28:52.124368
+267	1	2025-07-30 09:29:06.690953
+268	1	2025-07-30 09:29:16.410371
+269	2	2025-07-30 09:29:25.201346
+270	2	2025-07-30 09:30:02.369008
+271	2	2025-07-30 09:30:18.803548
+272	2	2025-07-30 09:38:54.711878
+273	3	2025-07-30 09:39:18.96533
+274	1	2025-07-30 09:40:05.703786
+275	1	2025-07-30 09:42:31.639429
+276	3	2025-07-30 10:50:35.275626
+277	2	2025-07-30 10:50:39.728656
+278	4	2025-07-30 10:50:43.6593
+279	7	2025-07-30 10:50:57.222745
+280	1	2025-07-30 10:51:03.779884
+281	5	2025-07-30 10:51:11.137447
+282	6	2025-07-30 10:51:19.794167
+283	4	2025-07-30 10:51:36.738594
+284	4	2025-07-30 10:51:41.703642
+285	4	2025-07-30 10:51:42.857344
+286	2	2025-07-30 11:04:57.779278
+\.
+
+
+--
+-- TOC entry 3802 (class 0 OID 16611)
 -- Dependencies: 210
 -- Data for Name: destinations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.destinations (id, name, image, tagline, description, attractions, cuisine, best_time, currency, language, average_cost, rating, clicks, last_reset) FROM stdin;
-3	New York, USA	/images/new_york_city.jpg	The City That Never Sleeps	New York is a fast-paced, energetic city known for its skyline, culture, and diversity. From Central Park to Times Square, there's always something happening.	{"Statue of Liberty","Central Park","Times Square","Empire State Building","Broadway Theaters"}	Try New York-style pizza, bagels, international street food, and fine dining from every cuisine imaginable.	April to June & September to November	US Dollar ($)	English	$150–250/day	4.6	0	2025-07-28 15:49:00.467561
-4	Rome, Italy	/images/rome.jpg	The Eternal City	Rome is a historic city filled with ancient ruins, Renaissance art, and vibrant street life. It's a journey through time with every step you take.	{Colosseum,"Trevi Fountain",Pantheon,"Vatican Museums","Roman Forum"}	Indulge in traditional Italian dishes like pasta carbonara, pizza margherita, gelato, and espresso.	April to June & September to October	Euro (€)	Italian	$120–200/day	4.3	0	2025-07-28 15:49:00.467561
-2	Tokyo, Japan	/images/japan.jpg	Tradition Meets Innovation	Tokyo is a bustling metropolis blending ancient temples with neon-lit skyscrapers. A city of contrasts, culture, and cutting-edge technology.	{"Shibuya Crossing","Tokyo Tower","Meiji Shrine",Akihabara,"Asakusa & Senso-ji Temple"}	Delight in sushi, ramen, tempura, and street snacks from Tsukiji Market and izakayas.	March to May & October to November	Japanese Yen (¥)	Japanese	¥9000–15000/day	4.9	3	2025-07-28 15:49:00.467561
-5	Sydney, Australia	/images/sydney.jpg	Harbour City	Sydney is a vibrant city known for its iconic Opera House, stunning harbour, and golden beaches. It offers a mix of urban excitement and natural beauty.	{"Sydney Opera House","Harbour Bridge","Bondi Beach","Darling Harbour","The Rocks"}	Enjoy fresh seafood, Australian BBQ, and a lively cafe culture across the city.	September to November & March to May	Australian Dollar (A$)	English	A$120–180/day	4.7	0	2025-07-28 15:49:00.467561
-7	Dubai, UAE	/images/dubai.jpg	The Jewel of the Desert	Dubai is known for its luxury shopping, ultramodern architecture, and lively nightlife. It's a dazzling mix of tradition and innovation.	{"Burj Khalifa","Palm Jumeirah","Dubai Mall","Desert Safari","Dubai Marina"}	Experience Middle Eastern delights like shawarma and hummus alongside global fine dining.	November to March	UAE Dirham (AED)	Arabic	AED 500–800/day	4.5	0	2025-07-28 15:49:00.467561
-1	Paris, France	/images/paris.jpg	The City of Light	Paris, the capital of France, is renowned for its art, fashion, gastronomy, and culture. The city is home to iconic landmarks like the Eiffel Tower, Notre-Dame Cathedral, and the Louvre Museum.	{"Eiffel Tower","Louvre Museum","Notre-Dame Cathedral",Champs-Élysées,Montmartre}	Experience authentic French cuisine including croissants, macarons, escargot, and world-class wines. Visit local bistros and patisseries for an authentic taste of Paris.	April to October	Euro (€)	French	€80–120/day	4.8	26	2025-07-28 15:59:38.249233
+3	New York, USA	/images/new_york_city.jpg	The City That Never Sleeps	New York is a fast-paced, energetic city known for its skyline, culture, and diversity. From Central Park to Times Square, there's always something happening.	{"Statue of Liberty","Central Park","Times Square","Empire State Building","Broadway Theaters"}	Try New York-style pizza, bagels, international street food, and fine dining from every cuisine imaginable.	April to June & September to November	US Dollar ($)	English	$150–250/day	4.6	8	2025-07-28 15:49:00.467561
+4	Rome, Italy	/images/rome.jpg	The Eternal City	Rome is a historic city filled with ancient ruins, Renaissance art, and vibrant street life. It's a journey through time with every step you take.	{Colosseum,"Trevi Fountain",Pantheon,"Vatican Museums","Roman Forum"}	Indulge in traditional Italian dishes like pasta carbonara, pizza margherita, gelato, and espresso.	April to June & September to October	Euro (€)	Italian	$120–200/day	4.3	6	2025-07-28 15:49:00.467561
+2	Tokyo, Japan	/images/japan.jpg	Tradition Meets Innovation	Tokyo is a bustling metropolis blending ancient temples with neon-lit skyscrapers. A city of contrasts, culture, and cutting-edge technology.	{"Shibuya Crossing","Tokyo Tower","Meiji Shrine",Akihabara,"Asakusa & Senso-ji Temple"}	Delight in sushi, ramen, tempura, and street snacks from Tsukiji Market and izakayas.	March to May & October to November	Japanese Yen (¥)	Japanese	¥9000–15000/day	4.9	23	2025-07-28 15:49:00.467561
+7	Dubai, UAE	/images/dubai.jpg	The Jewel of the Desert	Dubai is known for its luxury shopping, ultramodern architecture, and lively nightlife. It's a dazzling mix of tradition and innovation.	{"Burj Khalifa","Palm Jumeirah","Dubai Mall","Desert Safari","Dubai Marina"}	Experience Middle Eastern delights like shawarma and hummus alongside global fine dining.	November to March	UAE Dirham (AED)	Arabic	AED 500–800/day	4.5	1	2025-07-28 15:49:00.467561
+5	Sydney, Australia	/images/sydney.jpg	Harbour City	Sydney is a vibrant city known for its iconic Opera House, stunning harbour, and golden beaches. It offers a mix of urban excitement and natural beauty.	{"Sydney Opera House","Harbour Bridge","Bondi Beach","Darling Harbour","The Rocks"}	Enjoy fresh seafood, Australian BBQ, and a lively cafe culture across the city.	September to November & March to May	Australian Dollar (A$)	English	A$120–180/day	4.7	1	2025-07-28 15:49:00.467561
 6	Barcelona, Spain	/images/barcelona.jpg	The City of Gaudí	Barcelona is famous for its art, architecture, and Mediterranean charm. Explore Gaudí's masterpieces and enjoy the vibrant street life.	{"Sagrada Família","Park Güell","La Rambla","Gothic Quarter","Camp Nou"}	Relish tapas, paella, fresh seafood, and local wines in Barcelona's bustling bars.	May to June & September to October	Euro (€)	Catalan, Spanish	€80–130/day	4.8	1	2025-07-28 15:49:00.467561
 8	Cape Town, South Africa	/images/cape_town.jpg	Where Oceans Meet	Cape Town is known for its breathtaking scenery, Table Mountain, and beautiful beaches. It's a blend of culture, history, and adventure.	{"Table Mountain","Cape of Good Hope","Robben Island","Camps Bay Beach","Kirstenbosch Gardens"}	Enjoy fresh seafood, South African braai (BBQ), and local wines from the Cape Winelands.	November to March	South African Rand (ZAR)	English, Afrikaans	ZAR 1200–2000/day	4.6	0	2025-07-28 15:49:00.467561
+1	Paris, France	/images/paris.jpg	The City of Light	Paris, the capital of France, is renowned for its art, fashion, gastronomy, and culture. The city is home to iconic landmarks like the Eiffel Tower, Notre-Dame Cathedral, and the Louvre Museum.	{"Eiffel Tower","Louvre Museum","Notre-Dame Cathedral",Champs-Élysées,Montmartre}	Experience authentic French cuisine including croissants, macarons, escargot, and world-class wines. Visit local bistros and patisseries for an authentic taste of Paris.	April to October	Euro (€)	French	€80–120/day	4.8	245	2025-07-28 15:59:38.249233
 \.
 
 
 --
--- TOC entry 3792 (class 0 OID 16620)
+-- TOC entry 3804 (class 0 OID 16620)
 -- Dependencies: 212
 -- Data for Name: trips; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.trips (id, destination_id, title, start_date, end_date, status, added_at) FROM stdin;
-133	1		2025-07-16	2025-07-31	Planning	2025-07-28 12:57:09.947109
 \.
 
 
 --
--- TOC entry 3801 (class 0 OID 0)
+-- TOC entry 3816 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: destination_clicks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.destination_clicks_id_seq', 286, true);
+
+
+--
+-- TOC entry 3817 (class 0 OID 0)
 -- Dependencies: 209
 -- Name: destinations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -181,16 +404,25 @@ SELECT pg_catalog.setval('public.destinations_id_seq', 4, true);
 
 
 --
--- TOC entry 3802 (class 0 OID 0)
+-- TOC entry 3818 (class 0 OID 0)
 -- Dependencies: 211
 -- Name: trips_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.trips_id_seq', 146, true);
+SELECT pg_catalog.setval('public.trips_id_seq', 162, true);
 
 
 --
--- TOC entry 3646 (class 2606 OID 16618)
+-- TOC entry 3658 (class 2606 OID 16669)
+-- Name: destination_clicks destination_clicks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.destination_clicks
+    ADD CONSTRAINT destination_clicks_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3654 (class 2606 OID 16618)
 -- Name: destinations destinations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -199,7 +431,7 @@ ALTER TABLE ONLY public.destinations
 
 
 --
--- TOC entry 3648 (class 2606 OID 16628)
+-- TOC entry 3656 (class 2606 OID 16628)
 -- Name: trips trips_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -208,7 +440,24 @@ ALTER TABLE ONLY public.trips
 
 
 --
--- TOC entry 3649 (class 2606 OID 16629)
+-- TOC entry 3661 (class 2620 OID 16676)
+-- Name: destination_clicks trg_increment_clicks; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER trg_increment_clicks AFTER INSERT ON public.destination_clicks FOR EACH ROW EXECUTE FUNCTION public.increment_destination_clicks();
+
+
+--
+-- TOC entry 3660 (class 2606 OID 16670)
+-- Name: destination_clicks destination_clicks_destination_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.destination_clicks
+    ADD CONSTRAINT destination_clicks_destination_id_fkey FOREIGN KEY (destination_id) REFERENCES public.destinations(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 3659 (class 2606 OID 16629)
 -- Name: trips trips_destination_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -217,7 +466,7 @@ ALTER TABLE ONLY public.trips
 
 
 --
--- TOC entry 3798 (class 0 OID 0)
+-- TOC entry 3812 (class 0 OID 0)
 -- Dependencies: 4
 -- Name: SCHEMA public; Type: ACL; Schema: -; Owner: stelioskoutsioumaris
 --
@@ -226,7 +475,7 @@ REVOKE USAGE ON SCHEMA public FROM PUBLIC;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2025-07-29 12:12:29 EEST
+-- Completed on 2025-07-30 11:07:22 EEST
 
 --
 -- PostgreSQL database dump complete

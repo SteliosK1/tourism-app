@@ -116,7 +116,7 @@ const handlePrevPage = () => {
   {/* filters button */}
     <Flex gap={4} align="center">
     <Menu>
-    <FormControl width="60px">
+    <FormControl width="70px">
   <Select
     value={destinationsPerPage}
     onChange={(e) => {
@@ -165,7 +165,7 @@ const handlePrevPage = () => {
       py={2}
       border="1px solid"
       borderColor="gray.300"
-      w={showSearch ? '230px' : '40px'}
+      w={showSearch ? '220px' : '40px'}
       transition="all 0.3s ease"
       position="relative"
     >

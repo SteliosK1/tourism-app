@@ -39,7 +39,7 @@ function Home() {
         w="100%"
         bg="teal.500"
         color="white"
-        py={16}
+        py={8}
         px={4}
         textAlign="center"
         // borderBottomRadius={3}
