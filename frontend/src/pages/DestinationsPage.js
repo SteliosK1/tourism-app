@@ -37,7 +37,11 @@ const DestinationsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const [sortBy, setSortBy] = useState('');
-
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  
   useEffect(() => {
     fetch('http://localhost:5050/api/destinations') 
       .then((res) => res.json())
@@ -49,6 +53,14 @@ const DestinationsPage = () => {
         console.error('Failed to fetch destinations:', error);
         setLoading(false);
       });
+
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
   
   const filteredDestinations = destinations.filter((destination) =>
@@ -219,9 +231,23 @@ const handlePrevPage = () => {
     Next
   </Button>
 </Flex>
+{showScrollTop && (
+  <Button
+    position="fixed"
+    bottom="30px"
+    right="30px"
+    colorScheme="teal"
+    borderRadius="full"
+    boxShadow="md"
+    onClick={scrollToTop}
+  >
+    ↑ Top
+  </Button>
+)}
 
       </Box>
-  );
+  
+);
 };
 
 export default DestinationsPage;
