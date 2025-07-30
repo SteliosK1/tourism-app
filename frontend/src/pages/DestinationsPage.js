@@ -95,7 +95,7 @@ const handlePrevPage = () => {
   }
 
   return (
-    <Box maxW="1200px" mx="auto" mt={12} px={4}>
+    <Box maxW="1200px" mx="auto" mt={8} px={4}>
         <Flex justify="space-between" align="center" mb={4} wrap="wrap" gap={4}>
   <Heading fontSize="2xl" color="teal.500">
     📍 All Destinations
@@ -153,7 +153,7 @@ const handlePrevPage = () => {
       py={2}
       border="1px solid"
       borderColor="gray.300"
-      w={showSearch ? '300px' : '40px'}
+      w={showSearch ? '230px' : '40px'}
       transition="all 0.3s ease"
       position="relative"
     >
