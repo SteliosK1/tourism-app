@@ -39,9 +39,10 @@ function Home() {
         w="100%"
         bg="teal.500"
         color="white"
-        py={8}
+        py={10}
         px={4}
         textAlign="center"
+        m="-1"
         // borderBottomRadius={3}
       >
         <Heading fontSize="4xl" mb={4}>

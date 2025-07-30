@@ -100,7 +100,7 @@ export function AddTripModal({ destination, onSave }) {
   mx="auto"
 >
 
-          <ModalHeader>Add Trip {destination.name}</ModalHeader>
+          <ModalHeader>Add Trip: {destination.name}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl mb={4}>

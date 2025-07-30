@@ -116,7 +116,7 @@ const formatDateOnly = (dateStr) => {
   mx="auto"
 >
 
-        <ModalHeader>Edit Trip</ModalHeader>
+        <ModalHeader>Edit Trip: {trip.name}</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
           <FormControl mb={3}>
