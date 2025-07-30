@@ -1,24 +1,9 @@
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  ModalCloseButton,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Select,
-  useDisclosure,
-  useToast,
+  Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody,
+  ModalFooter, ModalCloseButton, Button, FormControl, FormLabel,
+  Input, Select, useDisclosure, useToast
 } from '@chakra-ui/react';
-import { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { CalendarIcon } from '@chakra-ui/icons';
-import React, { forwardRef } from 'react';
+import React, { useState } from 'react';
 
 
 export function AddTripModal({ destination, onSave }) {
@@ -102,13 +87,6 @@ export function AddTripModal({ destination, onSave }) {
       });
     }
   };
-
-  const CustomInput = forwardRef(({ value, onClick }, ref) => (
-    <Button onClick={onClick} ref={ref} leftIcon={<CalendarIcon />} size="sm">
-      {value || 'Select date'}
-    </Button>
-  ));
-  
   return (
     <>
       <Button colorScheme="teal" onClick={onOpen}>
@@ -130,25 +108,23 @@ export function AddTripModal({ destination, onSave }) {
               <Input value={tripTitle} onChange={(e) => setTripTitle(e.target.value)} />
             </FormControl>
 
-            <FormControl mb={4}>
-              <FormLabel>Start Date</FormLabel>
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-                customInput={<CustomInput />}
-                dateFormat="dd/MM/yyyy"
-              />
-            </FormControl>
+            <FormControl mb={3}>
+  <FormLabel>Start Date</FormLabel>
+  <Input
+    type="date"
+    value={startDate ? formatDateOnly(startDate) : ""}
+    onChange={(e) => setStartDate(new Date(e.target.value))}
+  />
+</FormControl>
 
-            <FormControl mb={4}>
-              <FormLabel>End Date</FormLabel>
-              <DatePicker
-                selected={endDate}
-                onChange={(date) => setEndDate(date)}
-                customInput={<CustomInput />}
-                 dateFormat="dd/MM/yyyy"
-              />
-            </FormControl>
+<FormControl mb={3}>
+  <FormLabel>End Date</FormLabel>
+  <Input
+    type="date"
+    value={endDate ? formatDateOnly(endDate) : ""}
+    onChange={(e) => setEndDate(new Date(e.target.value))}
+  />
+</FormControl>
 
             <FormControl mb={3}>
   <FormLabel>Status</FormLabel>
