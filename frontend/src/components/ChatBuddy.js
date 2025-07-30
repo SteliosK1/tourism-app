@@ -40,26 +40,53 @@ const ChatBuddy = () => {
   const sendMessage = async () => {
     if (!input.trim()) return;
   
-    // ✅ Έλεγχος για match με destination
-    const matchedDestination = availableDestinations.find((dest) =>
-      input.toLowerCase().includes(dest.name.toLowerCase().split(",")[0]) // Παίρνουμε μόνο την πόλη π.χ. "Paris"
-    );
-  
     const newMessages = [...messages, { role: 'user', content: input }];
     setMessages(newMessages);
     setInput('');
   
-    // ✅ Αν βρέθηκε destination → προσθέτουμε μήνυμα με link
+    // ✅ Έλεγχος για destination
+    const matchedDestination = availableDestinations.find((dest) =>
+      input.toLowerCase().includes(dest.name.toLowerCase().split(",")[0])
+    );
+  
     if (matchedDestination) {
+      // ✅ Ελέγχουμε keywords
+      const lowerInput = input.toLowerCase();
+      let responseParts = [];
+  
+      if (lowerInput.includes("click")) {
+        responseParts.push(`It currently has **${matchedDestination.clicks} clicks** 🔥`);
+      }
+      if (lowerInput.includes("rating")) {
+        responseParts.push(`Its rating is **${matchedDestination.rating}/5 ⭐**`);
+      }
+      if (lowerInput.includes("language")) {
+        responseParts.push(`The main language is **${matchedDestination.language}** 🗣️`);
+      }
+      if (lowerInput.includes("cost") || lowerInput.includes("price")) {
+        responseParts.push(`The average cost to visit is **${matchedDestination.average_cost}** 💰`);
+      }
+  
+      // ✅ Αν βρήκαμε στοιχεία → φτιάχνουμε απάντηση
+      if (responseParts.length > 0) {
+        const combinedMessage = {
+          role: 'assistant',
+          content: `${matchedDestination.name}: ${responseParts.join(" • ")}`
+        };
+        setMessages([...newMessages, combinedMessage]);
+        return;
+      }
+  
+      // ✅ Αν δεν βρέθηκε keyword, εμφανίζουμε link
       const linkMessage = {
         role: 'assistant',
-        content: `I found **${matchedDestination.name}**! 👉 [View details](/destination/${matchedDestination.id})`
+        content: `I found **${matchedDestination.name}**! 👉 <a href="/destination/${matchedDestination.id}" style="color: teal; text-decoration: underline;">View details</a>`
       };
       setMessages([...newMessages, linkMessage]);
       return;
     }
   
-    // ✅ Αν δεν βρεθεί → συνεχίζουμε με AI
+    // ✅ Αν δεν ταιριάζει με destination → AI
     setLoading(true);
     try {
       const res = await fetch('http://localhost:5050/api/chat', {
@@ -87,6 +114,7 @@ const ChatBuddy = () => {
   
     setLoading(false);
   };
+  
   
   
 

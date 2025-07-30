@@ -4,15 +4,26 @@ const db = require('../db');
 
 // GET /api/destinations
 router.get('/', async (req, res) => {
-  console.log('📥 GET /api/destinations received');
   try {
-    const result = await db.query('SELECT * FROM destinations ORDER BY id');
+    const result = await db.query(`
+      SELECT 
+        d.*,
+        COALESCE((
+          SELECT COUNT(*) 
+          FROM public.destination_clicks c 
+          WHERE c.destination_id = d.id 
+          AND c.click_date >= (CURRENT_DATE - INTERVAL '30 days')
+        ), 0) AS clicks_last_30_days
+      FROM public.destinations d
+    `);
+
     res.json(result.rows);
   } catch (err) {
-    console.error('❌ Query failed:', err); // <== ΕΔΩ!
+    console.error(err);
     res.status(500).json({ error: 'Failed to fetch destinations' });
   }
 });
+
 
 // GET /api/destinations/:id
 router.get('/:id', async (req, res) => {

@@ -74,7 +74,7 @@ const sortedDestinations = [...filteredDestinations].sort((a, b) => {
     return b.rating - a.rating;
   } else if (sortBy === 'clicks' || sortBy === '' || sortBy === 'none') {
     // Προεπιλογή: ταξινόμηση με clicks φθίνουσα
-    return b.clicks - a.clicks;
+    return b.clicks_last_30_days - a.clicks_last_30_days;
   }
   return 0;
 });
@@ -205,7 +205,25 @@ const handlePrevPage = () => {
         <Text mb={2}>{dest.description}</Text>
         <HStack justifyContent="space-between">
           <Badge colorScheme="yellow">⭐ {dest.rating}/5</Badge>
-          <Badge colorScheme="purple">🔥 {dest.clicks} clicks</Badge>
+          <Badge 
+  style={{
+    backgroundColor:
+      dest.clicks_last_30_days > 100
+        ? '#EF4444' // κόκκινο (πολύ δημοφιλές)
+        : dest.clicks_last_30_days >= 50
+        ? '#F97316' // πορτοκαλί (μεσαίο)
+        : '#22C55E', // πράσινο (χαμηλό)
+    color: 'white',
+    padding: '4px 8px',
+    borderRadius: '8px',
+    fontWeight: 'bold',
+    display: 'inline-block',
+    marginTop: '6px'
+  }}
+>
+  🔥 {dest.clicks_last_30_days} clicks
+
+</Badge>
                  
           <Button
             as={RouterLink}
