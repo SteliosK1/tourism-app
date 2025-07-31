@@ -5,7 +5,7 @@
 -- Dumped from database version 14.18 (Homebrew)
 -- Dumped by pg_dump version 17.0
 
--- Started on 2025-07-30 17:01:53 EEST
+-- Started on 2025-07-31 17:42:39 EEST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -418,6 +418,28 @@ COPY public.destination_clicks (id, destination_id, click_date) FROM stdin;
 348	1	2025-07-30 16:41:31.29291
 349	1	2025-07-30 16:41:35.821892
 350	4	2025-07-30 16:45:58.987153
+351	3	2025-07-31 09:42:57.845532
+352	1	2025-07-31 09:43:39.557712
+353	2	2025-07-31 10:05:46.90324
+354	9	2025-07-31 10:55:19.310001
+355	4	2025-07-31 11:13:11.081513
+356	2	2025-07-31 11:30:59.366421
+357	1	2025-07-31 13:18:43.48207
+358	2	2025-07-31 13:26:13.757428
+359	4	2025-07-31 13:26:47.650747
+360	5	2025-07-31 13:38:04.93525
+361	6	2025-07-31 15:29:18.711299
+362	4	2025-07-31 15:35:50.772435
+363	4	2025-07-31 16:12:44.639638
+364	4	2025-07-31 16:12:58.714497
+365	6	2025-07-31 16:13:06.692889
+366	8	2025-07-31 16:17:25.648794
+367	2	2025-07-31 16:58:47.692032
+368	4	2025-07-31 17:02:27.220327
+369	1	2025-07-31 17:02:35.760274
+370	1	2025-07-31 17:05:26.900226
+371	2	2025-07-31 17:11:24.234994
+372	1	2025-07-31 17:11:55.841045
 \.
 
 
@@ -428,15 +450,15 @@ COPY public.destination_clicks (id, destination_id, click_date) FROM stdin;
 --
 
 COPY public.destinations (id, name, image, tagline, description, attractions, cuisine, best_time, currency, language, average_cost, rating, clicks, last_reset) FROM stdin;
-9	Havana, Cuba	/images/havana.jpg	The Pearl of the Caribbean	Havana, the capital of Cuba, is famous for its colorful colonial architecture, vibrant music scene, vintage cars, and rich history. Visitors can explore Old Havana, stroll along the Malecón, and enjoy the city's lively culture.	{"Old Havana (Habana Vieja)",Malecón,"El Capitolio","Plaza de la Revolución","Museo Nacional de Bellas Artes"}	Taste Cuban specialties like ropa vieja, picadillo, arroz con pollo, and delicious tropical cocktails like mojitos and daiquiris.	November to April	Cuban Peso (CUP)	Spanish	€40–70/day	4.6	0	2025-07-30 10:45:00
-3	New York, USA	/images/new_york_city.jpg	The City That Never Sleeps	New York is a fast-paced, energetic city known for its skyline, culture, and diversity. From Central Park to Times Square, there's always something happening.	{"Statue of Liberty","Central Park","Times Square","Empire State Building","Broadway Theaters"}	Try New York-style pizza, bagels, international street food, and fine dining from every cuisine imaginable.	April to June & September to November	US Dollar ($)	English	$150–250/day	4.6	1	2025-07-28 15:49:00.467561
-2	Tokyo, Japan	/images/japan.jpg	Tradition Meets Innovation	Tokyo is a bustling metropolis blending ancient temples with neon-lit skyscrapers. A city of contrasts, culture, and cutting-edge technology.	{"Shibuya Crossing","Tokyo Tower","Meiji Shrine",Akihabara,"Asakusa & Senso-ji Temple"}	Delight in sushi, ramen, tempura, and street snacks from Tsukiji Market and izakayas.	March to May & October to November	Japanese Yen (¥)	Japanese	¥9000–15000/day	4.9	3	2025-07-28 15:49:00.467561
-4	Rome, Italy	/images/rome.jpg	The Eternal City	Rome is a historic city filled with ancient ruins, Renaissance art, and vibrant street life. It's a journey through time with every step you take.	{Colosseum,"Trevi Fountain",Pantheon,"Vatican Museums","Roman Forum"}	Indulge in traditional Italian dishes like pasta carbonara, pizza margherita, gelato, and espresso.	April to June & September to October	Euro (€)	Italian	$120–200/day	4.3	9	2025-07-28 15:49:00.467561
+3	New York, USA	/images/new_york_city.jpg	The City That Never Sleeps	New York is a fast-paced, energetic city known for its skyline, culture, and diversity. From Central Park to Times Square, there's always something happening.	{"Statue of Liberty","Central Park","Times Square","Empire State Building","Broadway Theaters"}	Try New York-style pizza, bagels, international street food, and fine dining from every cuisine imaginable.	April to June & September to November	US Dollar ($)	English	$150–250/day	4.6	2	2025-07-28 15:49:00.467561
+9	Havana, Cuba	/images/havana.jpg	The Pearl of the Caribbean	Havana, the capital of Cuba, is famous for its colorful colonial architecture, vibrant music scene, vintage cars, and rich history. Visitors can explore Old Havana, stroll along the Malecón, and enjoy the city's lively culture.	{"Old Havana (Habana Vieja)",Malecón,"El Capitolio","Plaza de la Revolución","Museo Nacional de Bellas Artes"}	Taste Cuban specialties like ropa vieja, picadillo, arroz con pollo, and delicious tropical cocktails like mojitos and daiquiris.	November to April	Cuban Peso (CUP)	Spanish	€40–70/day	4.6	1	2025-07-30 10:45:00
+4	Rome, Italy	/images/rome.jpg	The Eternal City	Rome is a historic city filled with ancient ruins, Renaissance art, and vibrant street life. It's a journey through time with every step you take.	{Colosseum,"Trevi Fountain",Pantheon,"Vatican Museums","Roman Forum"}	Indulge in traditional Italian dishes like pasta carbonara, pizza margherita, gelato, and espresso.	April to June & September to October	Euro (€)	Italian	$120–200/day	4.3	15	2025-07-28 15:49:00.467561
+2	Tokyo, Japan	/images/japan.jpg	Tradition Meets Innovation	Tokyo is a bustling metropolis blending ancient temples with neon-lit skyscrapers. A city of contrasts, culture, and cutting-edge technology.	{"Shibuya Crossing","Tokyo Tower","Meiji Shrine",Akihabara,"Asakusa & Senso-ji Temple"}	Delight in sushi, ramen, tempura, and street snacks from Tsukiji Market and izakayas.	March to May & October to November	Japanese Yen (¥)	Japanese	¥9000–15000/day	4.9	8	2025-07-28 15:49:00.467561
 7	Dubai, UAE	/images/dubai.jpg	The Jewel of the Desert	Dubai is known for its luxury shopping, ultramodern architecture, and lively nightlife. It's a dazzling mix of tradition and innovation.	{"Burj Khalifa","Palm Jumeirah","Dubai Mall","Desert Safari","Dubai Marina"}	Experience Middle Eastern delights like shawarma and hummus alongside global fine dining.	November to March	UAE Dirham (AED)	Arabic	AED 500–800/day	4.5	0	2025-07-28 15:49:00.467561
-5	Sydney, Australia	/images/sydney.jpg	Harbour City	Sydney is a vibrant city known for its iconic Opera House, stunning harbour, and golden beaches. It offers a mix of urban excitement and natural beauty.	{"Sydney Opera House","Harbour Bridge","Bondi Beach","Darling Harbour","The Rocks"}	Enjoy fresh seafood, Australian BBQ, and a lively cafe culture across the city.	September to November & March to May	Australian Dollar (A$)	English	A$120–180/day	4.7	0	2025-07-28 15:49:00.467561
-6	Barcelona, Spain	/images/barcelona.jpg	The City of Gaudí	Barcelona is famous for its art, architecture, and Mediterranean charm. Explore Gaudí's masterpieces and enjoy the vibrant street life.	{"Sagrada Família","Park Güell","La Rambla","Gothic Quarter","Camp Nou"}	Relish tapas, paella, fresh seafood, and local wines in Barcelona's bustling bars.	May to June & September to October	Euro (€)	Catalan, Spanish	€80–130/day	4.8	0	2025-07-28 15:49:00.467561
-8	Cape Town, South Africa	/images/cape_town.jpg	Where Oceans Meet	Cape Town is known for its breathtaking scenery, Table Mountain, and beautiful beaches. It's a blend of culture, history, and adventure.	{"Table Mountain","Cape of Good Hope","Robben Island","Camps Bay Beach","Kirstenbosch Gardens"}	Enjoy fresh seafood, South African braai (BBQ), and local wines from the Cape Winelands.	November to March	South African Rand (ZAR)	English, Afrikaans	ZAR 1200–2000/day	4.6	0	2025-07-28 15:49:00.467561
-1	Paris, France	/images/paris.jpg	The City of Light	Paris, the capital of France, is renowned for its art, fashion, gastronomy, and culture. The city is home to iconic landmarks like the Eiffel Tower, Notre-Dame Cathedral, and the Louvre Museum.	{"Eiffel Tower","Louvre Museum","Notre-Dame Cathedral",Champs-Élysées,Montmartre}	Experience authentic French cuisine including croissants, macarons, escargot, and world-class wines. Visit local bistros and patisseries for an authentic taste of Paris.	April to October	Euro (€)	French	€80–120/day	4.8	18	2025-07-28 15:59:38.249233
+5	Sydney, Australia	/images/sydney.jpg	Harbour City	Sydney is a vibrant city known for its iconic Opera House, stunning harbour, and golden beaches. It offers a mix of urban excitement and natural beauty.	{"Sydney Opera House","Harbour Bridge","Bondi Beach","Darling Harbour","The Rocks"}	Enjoy fresh seafood, Australian BBQ, and a lively cafe culture across the city.	September to November & March to May	Australian Dollar (A$)	English	A$120–180/day	4.7	1	2025-07-28 15:49:00.467561
+6	Barcelona, Spain	/images/barcelona.jpg	The City of Gaudí	Barcelona is famous for its art, architecture, and Mediterranean charm. Explore Gaudí's masterpieces and enjoy the vibrant street life.	{"Sagrada Família","Park Güell","La Rambla","Gothic Quarter","Camp Nou"}	Relish tapas, paella, fresh seafood, and local wines in Barcelona's bustling bars.	May to June & September to October	Euro (€)	Catalan, Spanish	€80–130/day	4.8	2	2025-07-28 15:49:00.467561
+8	Cape Town, South Africa	/images/cape_town.jpg	Where Oceans Meet	Cape Town is known for its breathtaking scenery, Table Mountain, and beautiful beaches. It's a blend of culture, history, and adventure.	{"Table Mountain","Cape of Good Hope","Robben Island","Camps Bay Beach","Kirstenbosch Gardens"}	Enjoy fresh seafood, South African braai (BBQ), and local wines from the Cape Winelands.	November to March	South African Rand (ZAR)	English, Afrikaans	ZAR 1200–2000/day	4.6	1	2025-07-28 15:49:00.467561
+1	Paris, France	/images/paris.jpg	The City of Light	Paris, the capital of France, is renowned for its art, fashion, gastronomy, and culture. The city is home to iconic landmarks like the Eiffel Tower, Notre-Dame Cathedral, and the Louvre Museum.	{"Eiffel Tower","Louvre Museum","Notre-Dame Cathedral",Champs-Élysées,Montmartre}	Experience authentic French cuisine including croissants, macarons, escargot, and world-class wines. Visit local bistros and patisseries for an authentic taste of Paris.	April to October	Euro (€)	French	€80–120/day	4.8	23	2025-07-28 15:59:38.249233
 \.
 
 
@@ -447,8 +469,9 @@ COPY public.destinations (id, name, image, tagline, description, attractions, cu
 --
 
 COPY public.trips (id, destination_id, title, start_date, end_date, status, added_at) FROM stdin;
-165	1		2025-07-31	2025-08-29	planning	2025-07-30 11:35:10.864977
-166	3	New York, USA	\N	\N	saved	2025-07-30 11:35:24.57197
+178	6		2025-10-02	2025-10-09	planning	2025-07-31 15:29:30.477714
+180	1	Paris, France	\N	\N	saved	2025-07-31 17:02:49.280363
+174	4		2025-10-01	2025-10-10	confirmed	2025-07-31 11:13:20.378526
 \.
 
 
@@ -458,7 +481,7 @@ COPY public.trips (id, destination_id, title, start_date, end_date, status, adde
 -- Name: destination_clicks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.destination_clicks_id_seq', 350, true);
+SELECT pg_catalog.setval('public.destination_clicks_id_seq', 372, true);
 
 
 --
@@ -476,7 +499,7 @@ SELECT pg_catalog.setval('public.destinations_id_seq', 4, true);
 -- Name: trips_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.trips_id_seq', 167, true);
+SELECT pg_catalog.setval('public.trips_id_seq', 180, true);
 
 
 --
@@ -542,7 +565,7 @@ REVOKE USAGE ON SCHEMA public FROM PUBLIC;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2025-07-30 17:01:53 EEST
+-- Completed on 2025-07-31 17:42:40 EEST
 
 --
 -- PostgreSQL database dump complete
