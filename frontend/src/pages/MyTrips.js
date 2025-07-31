@@ -14,7 +14,7 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { EditTripModal } from '../components/EditTripModal';
 import { useTrips } from '../hooks/useTrips';
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
@@ -36,6 +36,9 @@ export default function MyTrips() {
     getDay,
     locales,
   });
+  const [calendarDate, setCalendarDate] = useState(new Date());
+  const [hasNavigated, setHasNavigated] = useState(false); // ✅ Νέο state
+
   
   const saved = trips.filter(trip => trip.status?.toLowerCase() === "saved");
   const planned = trips.filter(trip =>
@@ -66,7 +69,22 @@ export default function MyTrips() {
       status: trip.status?.toLowerCase() || "planning"
     };
   });
-  const EventWithTooltip = ({ event }) => {
+ 
+
+useEffect(() => {
+  if (!hasNavigated && calendarEvents.length > 0) {
+    const upcomingTrip = calendarEvents
+      .filter(event => event.start >= new Date())
+      .sort((a, b) => a.start - b.start)[0];
+
+    if (upcomingTrip) {
+      setCalendarDate(upcomingTrip.start); // ✅ Πήγαινε στο επόμενο ταξίδι
+      setHasNavigated(true); // ✅ Μην ξανατρέξεις
+    }
+  }
+}, [calendarEvents, hasNavigated]);
+
+const EventWithTooltip = ({ event }) => {
     const startDate = event.start.toLocaleDateString("en-GB");
     const endDate = event.end.toLocaleDateString("en-GB");
   
@@ -298,6 +316,8 @@ export default function MyTrips() {
   events={calendarEvents}
   startAccessor="start"
   endAccessor="end"
+  date={calendarDate} 
+  onNavigate={(date) => setCalendarDate(date)} 
   style={{ height: 500, margin: "20px 0", borderRadius: "8px" }}
   views={['month', 'week', 'day', 'agenda']}  // ✅ Προσθήκη Agenda
   defaultView="month"
