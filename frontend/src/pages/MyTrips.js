@@ -106,16 +106,18 @@ const EventWithTooltip = ({ event }) => {
     const endDate = event.end.toLocaleDateString("en-GB");
   
     return (
-      <Tooltip 
-        label={`${event.title}\n${event.destination || ""}\n${event.tagline || ""}\n${startDate} – ${endDate}`} 
-        aria-label="Trip details"
-        hasArrow
-        bg="gray.700"
-        color="white"
-        placement="top"
-      >
-        <span>{event.title}</span>
-      </Tooltip>
+        <Tooltip
+          label={`${event.title}\n${event.destination || ""}\n${event.tagline || ""}\n${startDate} – ${endDate}`}
+          aria-label="Trip details"
+          hasArrow
+          bg="gray.700"
+          color="white"
+          placement="top"
+        >
+          <Box as="span" display="inline-block">
+            {event.title}
+          </Box>
+        </Tooltip>
     );
   };
   const AgendaEvent = ({ event }) => (
