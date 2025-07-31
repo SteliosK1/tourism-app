@@ -41,9 +41,26 @@ export default function MyTrips() {
 
   
   const saved = trips.filter(trip => trip.status?.toLowerCase() === "saved");
-  const planned = trips.filter(trip =>
+  let planned = trips.filter(trip =>
+    ["planning", "confirmed"].includes(trip.status?.toLowerCase())
+  );// Φιλτράρισμα planning + confirmed
+  planned = trips.filter(trip =>
     ["planning", "confirmed"].includes(trip.status?.toLowerCase())
   );
+  
+  // Ταξινόμηση κατά ημερομηνία έναρξης (αύξουσα)
+  planned = planned.sort((a, b) => {
+    const dateA = a.dates 
+      ? parse(a.dates.split("–")[0].trim(), "dd/MM/yyyy", new Date())
+      : (a.start_date ? new Date(a.start_date) : new Date(8640000000000000)); // Μεγάλη τιμή για null
+  
+    const dateB = b.dates 
+      ? parse(b.dates.split("–")[0].trim(), "dd/MM/yyyy", new Date())
+      : (b.start_date ? new Date(b.start_date) : new Date(8640000000000000));
+  
+    return dateA - dateB;
+  });
+  
   // Δημιουργία events από ΟΛΑ τα planned trips (planning + confirmed)
   const calendarEvents = planned.map(trip => {
     console.log("Trip Object:", trip);
@@ -318,7 +335,7 @@ const EventWithTooltip = ({ event }) => {
   endAccessor="end"
   date={calendarDate} 
   onNavigate={(date) => setCalendarDate(date)} 
-  style={{ height: 500, margin: "20px 0", borderRadius: "8px" }}
+  style={{ height: 600, margin: "10px 0", borderRadius: "8px" }}
   views={['month', 'week', 'day', 'agenda']}  // ✅ Προσθήκη Agenda
   defaultView="month"
   eventPropGetter={(event) => {
