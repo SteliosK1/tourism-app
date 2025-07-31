@@ -6,6 +6,7 @@ import {
   Button,
   Badge,
   VStack,
+  HStack,
   Divider,
   Image,
   useToast,
@@ -16,17 +17,119 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { EditTripModal } from '../components/EditTripModal';
 import { useTrips } from '../hooks/useTrips';
+import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import { format, parse, startOfWeek, getDay } from "date-fns";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import { enGB } from "date-fns/locale";
+import { Tooltip } from "@chakra-ui/react"; // Βεβαιώσου ότι το έχεις στο import
 
 
 
 export default function MyTrips() {
   const { trips, updateTrip, removeTrip } = useTrips();
   const toast = useToast();
-
+  const locales = { "en-GB": enGB };
+  const localizer = dateFnsLocalizer({
+    format,
+    parse,
+    startOfWeek,
+    getDay,
+    locales,
+  });
+  
   const saved = trips.filter(trip => trip.status?.toLowerCase() === "saved");
   const planned = trips.filter(trip =>
     ["planning", "confirmed"].includes(trip.status?.toLowerCase())
   );
+  // Δημιουργία events από ΟΛΑ τα planned trips (planning + confirmed)
+  const calendarEvents = planned.map(trip => {
+    console.log("Trip Object:", trip);
+  
+    // Αν υπάρχει πεδίο dates τύπου "02/08/2025 – 12/08/2025"
+    let start, end;
+    if (trip.dates) {
+      const [startStr, endStr] = trip.dates.split("–").map(d => d.trim());
+      start = parse(startStr, "dd/MM/yyyy", new Date());
+      end = parse(endStr, "dd/MM/yyyy", new Date());
+    } else {
+      // Fallback αν υπάρχουν ξεχωριστά πεδία
+      start = trip.start_date ? new Date(trip.start_date) : new Date();
+      end = trip.end_date ? new Date(trip.end_date) : start;
+    }
+    return {
+      title: trip.name,
+      destination: trip.destination,     
+      tagline: trip.tagline,   
+      image: trip.image,          
+      start,
+      end: new Date(end.getTime() + 24 * 60 * 60 * 1000),
+      status: trip.status?.toLowerCase() || "planning"
+    };
+  });
+  const EventWithTooltip = ({ event }) => {
+    const startDate = event.start.toLocaleDateString("en-GB");
+    const endDate = event.end.toLocaleDateString("en-GB");
+  
+    return (
+      <Tooltip 
+        label={`${event.title}\n${event.destination || ""}\n${event.tagline || ""}\n${startDate} – ${endDate}`} 
+        aria-label="Trip details"
+        hasArrow
+        bg="gray.700"
+        color="white"
+        placement="top"
+      >
+        <span>{event.title}</span>
+      </Tooltip>
+    );
+  };
+  const AgendaEvent = ({ event }) => (
+    <Box
+      display="flex"
+      alignItems="center"
+      gap={4}
+      bg="white"
+      borderRadius="md"
+      boxShadow="sm"
+      p={3}
+      border="1px solid"
+      borderColor="gray.200"
+      _hover={{ boxShadow: "md", transform: "scale(1.02)", transition: "0.2s" }}
+      w="100%"
+      minH="90px" // ✅ σταθερό ύψος για όλες τις κάρτες
+    >
+      <Image
+        src={event.image}
+        alt={event.title}
+        boxSize="70px" // ✅ σταθερό μέγεθος εικόνας
+        borderRadius="md"
+        objectFit="cover"
+      />
+      <Box flex="1" minW={0}>
+        <HStack spacing={2} align="center" mb={1}>
+          <Text 
+            fontWeight="bold" 
+            color="black" 
+            fontSize="md"
+            isTruncated // ✅ κόβει πολύ μεγάλο τίτλο
+          >
+            {event.title}
+          </Text>
+          <Badge colorScheme={event.status === "confirmed" ? "green" : "yellow"}>
+            {event.status.toUpperCase()}
+          </Badge>
+        </HStack>
+        <Text fontSize="sm" color="gray.600" isTruncated>
+          {event.destination}
+        </Text>
+        <Text fontSize="xs" color="gray.500" isTruncated noOfLines={1}>
+          {event.tagline}
+        </Text>
+      </Box>
+    </Box>
+  );
+  
+
   
   const [selectedTrip, setSelectedTrip] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -186,8 +289,34 @@ export default function MyTrips() {
               </Box>
             </Box>
           ))
+          
         )}
-      </VStack>
+      </VStack><Heading fontSize="lg" mt={8} mb={2}>📅 Travel Calendar</Heading>
+      <Divider mb={4} />
+      <Calendar
+  localizer={localizer}
+  events={calendarEvents}
+  startAccessor="start"
+  endAccessor="end"
+  style={{ height: 500, margin: "20px 0", borderRadius: "8px" }}
+  views={['month', 'week', 'day', 'agenda']}  // ✅ Προσθήκη Agenda
+  defaultView="month"
+  eventPropGetter={(event) => {
+    let backgroundColor = "#3182CE";
+    if (event.status === "confirmed") backgroundColor = "#75c99c";
+    if (event.status === "planning") backgroundColor = "#dbb844";
+    return { style: { backgroundColor, color: "white", borderRadius: "5px" } };
+  }}
+  components={{
+    event: EventWithTooltip,
+    agenda: {
+      event: AgendaEvent, // ✅ custom agenda row
+    }
+  }}
+  
+/>
+
+
     </Box>
   );
 }
