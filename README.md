@@ -40,6 +40,7 @@ src/
 │   ├── DestinationsPage.js
 │   ├── DestinationDetails.js
 │   └── MyTrips.js
+...
 
 ### 🚀 Getting Started
 Install dependencies
@@ -64,7 +65,6 @@ Saved destinations list
 Planned trips with edit options via modals
 
 ### 📸 Screenshots
-Add screenshots inside public/screenshots and update the markdown here:
 ![Home](frontend/public/screenshots/HomePage.png)
 ![Details](frontend/public/screenshots/DestinationsDetails.png)
 ![Trips](frontend/public/screenshots/MyTrips.png)
